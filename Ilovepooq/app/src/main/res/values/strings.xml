@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">I Love pooq</string>
+
+    <!-- dialog -->
+    <string name="dialog_disconnected_network_title">Disconnected Network</string>
+    <string name="dialog_disconnected_network_message">Please connect to network.</string>
+    <string name="dialog_parsing_error_title">Parsing Error</string>
+    <string name="dialog_parsing_error_message">Please restart application.</string>
+
+    <!-- main activity -->
+    <string name="textview_no_item_text">No item</string>
+
+    <!-- image -->
+    <string name="imageview_transition_name">image</string>
+
+    <!-- toast -->
+    <string name="toast_no_link_url">There is no link url.</string>
+
+</resources>

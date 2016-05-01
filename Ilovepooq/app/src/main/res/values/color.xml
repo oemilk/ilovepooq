@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+
+    <color name="colorPrimary">#7f47be</color>
+    <color name="colorPrimaryDark">#7f47be</color>
+    <color name="colorGridTextBackground">#55000000</color>
+
+</resources>
