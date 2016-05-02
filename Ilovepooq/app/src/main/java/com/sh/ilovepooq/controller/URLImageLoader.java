@@ -31,6 +31,11 @@ public class URLImageLoader {
     private URLImageLoader() {
     }
 
+    /**
+     * Initialize ImageLoader with ImageLoaderConfiguration.
+     *
+     * @param context Application context.
+     */
     public void init(Context context) {
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
                 .denyCacheImageMultipleSizesInMemory() // Set a same memory size.
@@ -40,6 +45,13 @@ public class URLImageLoader {
         mImageLoader.init(config);
     }
 
+    /**
+     * Display a image to imageView.
+     *
+     * @param url       Image URL
+     * @param imageView ImageView
+     * @param callback  URLImageLoaderCallback
+     */
     public void displayImage(String url, ImageView imageView, final URLImageLoaderCallback callback) {
         mImageLoader.displayImage(url, imageView, getOption(), new ImageLoadingListener() {
             @Override
@@ -68,14 +80,19 @@ public class URLImageLoader {
 
     }
 
+    /**
+     * Get a lmageLoader options.
+     *
+     * @return an objcet of DisplayImageOptions.
+     */
     private DisplayImageOptions getOption() {
         return new DisplayImageOptions.Builder()
-                .showImageForEmptyUri(R.drawable.item_no_image)
-                .showImageOnFail(R.drawable.item_error_image)
-                .resetViewBeforeLoading(true)
-                .cacheOnDisk(true)
-                .cacheInMemory(true)
-                .displayer(new FadeInBitmapDisplayer(FADE_TIME))
+                .showImageForEmptyUri(R.drawable.item_no_image) // Set an empry image.
+                .showImageOnFail(R.drawable.item_error_image) // Set a failed image.
+                .resetViewBeforeLoading(true) // Set whether image will be reset before image loading start.
+                .displayer(new FadeInBitmapDisplayer(FADE_TIME))// Set a duration of "fade-in" animation (in milliseconds).
+                .cacheOnDisk(true) // Set whether loaded image will be cached on disk.
+                .cacheInMemory(true) // Set whether loaded image will be cached on memory.
                 .build();
     }
 

@@ -53,6 +53,11 @@ public class HTMLParsingAsyncTask extends AsyncTask<Void, Void, ArrayList<Conten
         }
     }
 
+    /**
+     *  Get a parsing result as Document object.
+     *
+     * @return an objcet of Document.
+     */
     private Document getDocument() {
         try {
             Connection connection = Jsoup.connect(Constants.PARSE_URL);
@@ -63,6 +68,12 @@ public class HTMLParsingAsyncTask extends AsyncTask<Void, Void, ArrayList<Conten
         }
     }
 
+    /**
+     * Get the Image's info as ImageInfoModel object.
+     *
+     * @param document Document object from Jsoup connection.
+     * @return an ArrayList of ImageInfoModels.
+     */
     private ArrayList<ContentInfoModel> getContentInfoModelArrayList(Document document) {
         try {
             Log.d(TAG, "getContentInfoModelArrayList");
