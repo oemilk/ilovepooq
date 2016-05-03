@@ -44,7 +44,7 @@ If the structure is changed, codes should be modified for getting correct data.
 ## Generate ContentInfoModel
 
 It generates a data model from a parsing data.<br />
-This is also modified in case of parsing other struecters of HTML.
+This is also modified in case of parsing other structers of HTML.
 
 ```content_info_model
 public class ContentInfoModel {
@@ -61,7 +61,7 @@ public class ContentInfoModel {
 
 As you know, Android should consider many case of logics and performance for loading images.<br />
 So this project use [android universal image loader].
-This is also modified in case of parsing other struecters of HTML.
+This is also modified in case of parsing other structers of HTML.
 
 ```android_universal_image_loader
 dependencies {
@@ -86,7 +86,7 @@ dependencies {
 }
 ```
 
-If you have any question about this project.
+If you have any questions about this project.
 Please send an email to "oemilk@naver.com".
 
 [jsoup]: https://jsoup.org/
