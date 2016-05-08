@@ -20,6 +20,9 @@ public class HTMLParsingThread extends Thread {
 
     private String TAG = "HTMLParsingThread";
 
+    public static final int SUCCESS = 0;
+    public static final int FAIL = 1;
+
     private Handler mHandler;
 
     public HTMLParsingThread(Handler handler) {
@@ -29,20 +32,22 @@ public class HTMLParsingThread extends Thread {
     @Override
     public void run() {
         super.run();
+        Message message = new Message();
         try {
             Document document = getDocument();
             if (document != null) {
                 Log.d(TAG, "Document is not null.");
                 ArrayList<ContentInfoModel> list = getContentInfoModelArrayList(document);
-
-                Message message = new Message();
-                message.what = 0;
+                message.what = SUCCESS;
                 message.obj = list;
-
-                mHandler.sendMessage(message);
+            } else {
+                message.what = FAIL;
             }
         } catch (Exception e) {
+            message.what = FAIL;
             e.printStackTrace();
+        } finally {
+            mHandler.sendMessage(message);
         }
     }
 

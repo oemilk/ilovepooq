@@ -26,6 +26,7 @@ import com.sh.ilovepooq.R;
 import com.sh.ilovepooq.controller.HTMLParsingAsyncTask;
 import com.sh.ilovepooq.controller.HTMLParsingCallback;
 import com.sh.ilovepooq.controller.HTMLParsingThread;
+import com.sh.ilovepooq.controller.POOQAPIThread;
 import com.sh.ilovepooq.controller.URLImageLoader;
 import com.sh.ilovepooq.model.ContentInfoModel;
 import com.sh.ilovepooq.utils.NetworkUtils;
@@ -59,19 +60,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onHTMLParsingSucceed(ArrayList<ContentInfoModel> list) {
             Log.d(TAG, "parsing success");
-            mProgressBar.setVisibility(View.GONE);
-            if (!list.isEmpty()) {
-                Log.d(TAG, "List is not empty.");
-                mURLImageLoader = URLImageLoader.getInstance();
-                mURLImageLoader.init(MainActivity.this);
-                mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, list, mURLImageLoader);
-                mRecyclerView.setAdapter(mRecyclerViewAdapter);
-                mToolbarMenu.findItem(R.id.action_layout).setVisible(true);
-            } else {
-                Log.d(TAG, "List is empty.");
-                TextView textView = (TextView) findViewById(R.id.textview);
-                textView.setVisibility(View.VISIBLE);
-            }
+            setRecyclerViewUI(list);
         }
 
         @Override
@@ -126,20 +115,12 @@ public class MainActivity extends AppCompatActivity {
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
-                if (msg.what == 0) {
+                if (msg.what == HTMLParsingThread.SUCCESS) {
                     ArrayList<ContentInfoModel> list = (ArrayList<ContentInfoModel>) msg.obj;
-                    if (!list.isEmpty()) {
-                        Log.d(TAG, "List is not empty.");
-                        mURLImageLoader = URLImageLoader.getInstance();
-                        mURLImageLoader.init(MainActivity.this);
-                        mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, list, mURLImageLoader);
-                        mRecyclerView.setAdapter(mRecyclerViewAdapter);
-                        mToolbarMenu.findItem(R.id.action_layout).setVisible(true);
-                    } else {
-                        Log.d(TAG, "List is empty.");
-                        TextView textView = (TextView) findViewById(R.id.textview);
-                        textView.setVisibility(View.VISIBLE);
-                    }
+                    setRecyclerViewUI(list);
+                } else {
+                    showErrorDialog(getString(R.string.dialog_parsing_error_title),
+                            getString(R.string.dialog_parsing_error_message));
                 }
                 super.handleMessage(msg);
             }
@@ -147,6 +128,23 @@ public class MainActivity extends AppCompatActivity {
 
         HTMLParsingThread thread = new HTMLParsingThread(mHandler);
         thread.start();
+
+    }
+
+    private void setRecyclerViewUI(ArrayList<ContentInfoModel> list) {
+        mProgressBar.setVisibility(View.GONE);
+        if (!list.isEmpty()) {
+            Log.d(TAG, "List is not empty.");
+            mURLImageLoader = URLImageLoader.getInstance();
+            mURLImageLoader.init(MainActivity.this);
+            mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, list, mURLImageLoader);
+            mRecyclerView.setAdapter(mRecyclerViewAdapter);
+            mToolbarMenu.findItem(R.id.action_layout).setVisible(true);
+        } else {
+            Log.d(TAG, "List is empty.");
+            TextView textView = (TextView) findViewById(R.id.textview);
+            textView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setRecyclerViewLayoutManager(int layoutManagerType) {
