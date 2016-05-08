@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -22,6 +25,7 @@ import com.sh.ilovepooq.Constants;
 import com.sh.ilovepooq.R;
 import com.sh.ilovepooq.controller.HTMLParsingAsyncTask;
 import com.sh.ilovepooq.controller.HTMLParsingCallback;
+import com.sh.ilovepooq.controller.HTMLParsingThread;
 import com.sh.ilovepooq.controller.URLImageLoader;
 import com.sh.ilovepooq.model.ContentInfoModel;
 import com.sh.ilovepooq.utils.NetworkUtils;
@@ -110,11 +114,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private Handler mHandler;
+
     private void parsingHTMLURL() {
         Log.d(TAG, "parsingHTMLURL");
-        mHTMLParsingAsyncTask = new HTMLParsingAsyncTask(mHtmlParsingCallback);
-        mHTMLParsingAsyncTask.execute();
+        // Ues an asyncTask for getting datas
+//        mHTMLParsingAsyncTask = new HTMLParsingAsyncTask(mHtmlParsingCallback);
+//        mHTMLParsingAsyncTask.execute();
 
+        // Ues a thread for getting datas
+        mHandler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                if (msg.what == 0) {
+                    ArrayList<ContentInfoModel> list = (ArrayList<ContentInfoModel>) msg.obj;
+                    if (!list.isEmpty()) {
+                        Log.d(TAG, "List is not empty.");
+                        mURLImageLoader = URLImageLoader.getInstance();
+                        mURLImageLoader.init(MainActivity.this);
+                        mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, list, mURLImageLoader);
+                        mRecyclerView.setAdapter(mRecyclerViewAdapter);
+                        mToolbarMenu.findItem(R.id.action_layout).setVisible(true);
+                    } else {
+                        Log.d(TAG, "List is empty.");
+                        TextView textView = (TextView) findViewById(R.id.textview);
+                        textView.setVisibility(View.VISIBLE);
+                    }
+                }
+                super.handleMessage(msg);
+            }
+        };
+
+        HTMLParsingThread thread = new HTMLParsingThread(mHandler);
+        thread.start();
     }
 
     private void setRecyclerViewLayoutManager(int layoutManagerType) {
