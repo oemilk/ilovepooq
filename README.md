@@ -7,7 +7,7 @@ This is a project for 1st code review interview.
 ![alt tag](https://github.com/oemilk/images/blob/master/ilovepooq_screenshot_01.png)
 ![alt tag](https://github.com/oemilk/images/blob/master/ilovepooq_screenshot_02.png)
 
-This can parse HTML by using the [jsoup] java library and gets content data from [SBS] website.<br />
+This can parse HTML by using the [jsoup] java library and gets content data from [SBS PD Note] website.<br />
 It use an [android universal image loader] java library for loading images.
 
 ## Parse HTML
@@ -16,28 +16,22 @@ Parsing a below HTML code structure.<br />
 If the structure is changed, codes should be modified for getting correct data.
 
 ```test_html_parsing
-<div class="sbsmd_mcmpt_w">
 
-    <a id="publist4" style="display: block;" href="hyperlink_01" target="_self" class="sit_cont"
-       title="title_01">
-        <img src="image_url_01" width="198" height="121" class="sit_img" alt="alt_01">
-        <strong class="sit_tit_w">
-            <span class="sit_tit">title_01</span>
-        </strong>
-    </a>
+    <li name="endListLi" class="pdnl_cont" style="display:none;">
+        <a href="hyperlink_01" class="pdnl_link">
+            <strong class="pdnl_name">name_01</strong>
+            <img src="image_url_01" alt="alt_01" class="pdnl_logo_img" width="180" height="180" pagespeed_url_hash="hash_01" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+            <i class="icn pdnl_mask"></i>
+        </a>
+    </li>
 
-</div>
-
-<div class="sbsmd_mcmpt_w">
-
-    <a href="hyperlink_02" class="sit_cont" title="title_02">
-        <img src="image_url_02" width="198" height="121" class="sit_img" alt="alt_02">
-        <strong class="sit_tit_w">
-            <span class="sit_tit">title_02</span>
-        </strong>
-    </a>
-
-</div>
+    <li name="endListLi" class="pdnl_cont" style="display:none;">
+        <a href="hyperlink_02" class="pdnl_link">
+            <strong class="pdnl_name">name_02</strong>
+            <img src="image_url_02" alt="alt_02" class="pdnl_logo_img" width="180" height="180" pagespeed_url_hash="hash_02" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
+            <i class="icn pdnl_mask"></i>
+        </a>
+    </li>
 
 ```
 
@@ -74,7 +68,7 @@ dependencies {
 
 ## Material design
 
-This project uses a [material desing] for presenting list and grid UI.<br />
+This project uses a [material design] for presenting list and grid UI.<br />
 
 ```material_design
 dependencies {
@@ -90,6 +84,6 @@ If you have any questions about this project.
 Please send an email to "oemilk@naver.com".
 
 [jsoup]: https://jsoup.org/
-[SBS]: http://www.sbs.co.kr/main.do
+[SBS PD Note]: http://w3.sbs.co.kr/pdNote/pdNoteProgram.do?pdnote_div=p_program
 [android universal image loader]: https://github.com/nostra13/Android-Universal-Image-Loader
-[material desing]: https://www.google.com/design/spec/material-design/introduction.html
+[material design]: https://www.google.com/design/spec/material-design/introduction.html
