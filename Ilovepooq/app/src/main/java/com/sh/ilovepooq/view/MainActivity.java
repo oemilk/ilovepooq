@@ -26,7 +26,6 @@ import com.sh.ilovepooq.R;
 import com.sh.ilovepooq.controller.HTMLParsingAsyncTask;
 import com.sh.ilovepooq.controller.HTMLParsingCallback;
 import com.sh.ilovepooq.controller.HTMLParsingThread;
-import com.sh.ilovepooq.controller.POOQAPIThread;
 import com.sh.ilovepooq.controller.URLImageLoader;
 import com.sh.ilovepooq.model.ContentInfoModel;
 import com.sh.ilovepooq.utils.NetworkUtils;

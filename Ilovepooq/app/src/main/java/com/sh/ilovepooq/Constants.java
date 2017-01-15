@@ -3,8 +3,8 @@ package com.sh.ilovepooq;
 public class Constants {
 
     // Parsing URL
-    public static final String PARSE_URL = "http://www.sbs.co.kr/main.do";
-    public static final String PARSE_SBSMD_MCMPT_W = ".sbsmd_mcmpt_w";
+    public static final String PARSE_URL = "http://w3.sbs.co.kr/pdNote/pdNoteProgram.do?pdnote_div=p_program";
+    public static final String PARSE_LI = "li";
     public static final String PARSE_SRC = "src";
     public static final String PARSE_ALT = "alt";
     public static final String PARSE_TITLE = "title";

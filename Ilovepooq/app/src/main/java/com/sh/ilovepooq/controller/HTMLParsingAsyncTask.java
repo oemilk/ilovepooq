@@ -77,7 +77,7 @@ public class HTMLParsingAsyncTask extends AsyncTask<Void, Void, ArrayList<Conten
     private ArrayList<ContentInfoModel> getContentInfoModelArrayList(Document document) {
         try {
             Log.d(TAG, "getContentInfoModelArrayList");
-            Elements elements = document.select(Constants.PARSE_SBSMD_MCMPT_W);
+            Elements elements = document.select(Constants.PARSE_LI);
             ArrayList<ContentInfoModel> list = new ArrayList<>();
             ContentInfoModel model;
             Node node;
@@ -87,14 +87,16 @@ public class HTMLParsingAsyncTask extends AsyncTask<Void, Void, ArrayList<Conten
 
             for (Element element : elements) {
                 node = element.childNode(1);
-                imageURL = node.childNode(1).attr(Constants.PARSE_SRC);
-                alt = node.childNode(1).attr(Constants.PARSE_ALT);
-                title = node.attr(Constants.PARSE_TITLE);
+                imageURL = node.childNode(3).attr(Constants.PARSE_SRC);
+                alt = node.childNode(3).attr(Constants.PARSE_ALT);
+                title = node.childNode(1).childNode(0).toString();
                 hyperlink = node.attr(Constants.PARSE_HREF).replace("\r", "").replace("\n", "").replace("\t", "");
 
                 model = new ContentInfoModel(imageURL, alt, title, hyperlink, Constants.SUCCESS);
-                Log.d(TAG, "url : " + imageURL + ", alt : " + alt + ", title : " + title + ", hyperlink : " + hyperlink);
-                list.add(model);
+                if (!imageURL.isEmpty() && !alt.isEmpty() && !title.isEmpty() && !hyperlink.isEmpty()) {
+                    Log.d(TAG, "url : " + imageURL + ", alt : " + alt + ", title : " + title + ", hyperlink : " + hyperlink);
+                    list.add(model);
+                }
             }
 
             return list;
