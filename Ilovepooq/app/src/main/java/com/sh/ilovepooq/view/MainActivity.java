@@ -136,7 +136,8 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "List is not empty.");
             mURLImageLoader = URLImageLoader.getInstance();
             mURLImageLoader.init(MainActivity.this);
-            mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, list, mURLImageLoader);
+//            mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, list, mURLImageLoader);
+            mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, list);
             mRecyclerView.setAdapter(mRecyclerViewAdapter);
             mToolbarMenu.findItem(R.id.action_layout).setVisible(true);
         } else {

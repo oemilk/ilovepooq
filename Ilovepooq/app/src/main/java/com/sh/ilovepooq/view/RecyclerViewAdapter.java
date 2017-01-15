@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.sh.ilovepooq.Constants;
 import com.sh.ilovepooq.R;
 import com.sh.ilovepooq.controller.URLImageLoader;
@@ -31,6 +32,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private ArrayList<ContentInfoModel> mList;
     private int mLayoutManagerType;
     private URLImageLoader mURLImageLoader;
+
+    public RecyclerViewAdapter(Context context, ArrayList<ContentInfoModel> list) {
+        mContext = context;
+        mList = list;
+        mLayoutManagerType = LIST_LAYOUT_MANAGER_TYPE;
+    }
 
     public RecyclerViewAdapter(Context context, ArrayList<ContentInfoModel> list, URLImageLoader URLImageLoader) {
         mContext = context;
@@ -96,19 +103,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     private void displayIamge(final ContentInfoModel model, ImageView imageView) {
-        mURLImageLoader.displayImage(model.getImageURL(), imageView, new URLImageLoaderCallback() {
-            @Override
-            public void onLoadingImageSucceed() {
-                Log.d(TAG, "displayIamge succeed");
-                model.setLoadingResult(Constants.SUCCESS);
-            }
+        if (mURLImageLoader == null) {
+            Glide
+                    .with(mContext)
+                    .load(model.getImageURL())
+                    .crossFade()
+                    .into(imageView)
+                    .onLoadStarted(mContext.getDrawable(R.drawable.item_no_image));
+        } else {
+            mURLImageLoader.displayImage(model.getImageURL(), imageView, new URLImageLoaderCallback() {
+                @Override
+                public void onLoadingImageSucceed() {
+                    Log.d(TAG, "displayIamge succeed");
+                    model.setLoadingResult(Constants.SUCCESS);
+                }
 
-            @Override
-            public void onLoadingImageFailed(int type) {
-                Log.d(TAG, "displayIamge failed");
-                model.setLoadingResult(type);
-            }
-        });
+                @Override
+                public void onLoadingImageFailed(int type) {
+                    Log.d(TAG, "displayIamge failed");
+                    model.setLoadingResult(type);
+                }
+            });
+        }
     }
 
     protected void setLayoutManagerType(int layoutManagerType) {
