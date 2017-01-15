@@ -54,13 +54,14 @@ public class ContentInfoModel {
 ## Load images
 
 As you know, Android should consider many case of logics and performance for loading images.<br />
-So this project use [android universal image loader].
+So this project use [android universal image loader] and [glide].
 This is also modified in case of parsing other structers of HTML.
 
 ```android_universal_image_loader
 dependencies {
     ...
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
     ...
 }
     
@@ -87,3 +88,4 @@ Please send an email to "oemilk@naver.com".
 [SBS PD Note]: http://w3.sbs.co.kr/pdNote/pdNoteProgram.do?pdnote_div=p_program
 [android universal image loader]: https://github.com/nostra13/Android-Universal-Image-Loader
 [material design]: https://www.google.com/design/spec/material-design/introduction.html
+[glide]: https://github.com/bumptech/glide
