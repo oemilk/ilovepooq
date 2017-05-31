@@ -1,6 +1,6 @@
-package com.sh.ilovepooq.controller;
+package com.sh.ilovepooq.MVC.controller;
 
-import com.sh.ilovepooq.model.ContentInfoModel;
+import com.sh.ilovepooq.MVC.model.ContentInfoModel;
 
 import java.util.ArrayList;
 

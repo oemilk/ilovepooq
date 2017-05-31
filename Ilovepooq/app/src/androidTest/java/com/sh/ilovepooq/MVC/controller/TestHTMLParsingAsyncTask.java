@@ -1,4 +1,4 @@
-package com.sh.ilovepooq.controller;
+package com.sh.ilovepooq.MVC.controller;
 
 import android.content.Context;
 import android.test.AndroidTestCase;
@@ -9,7 +9,6 @@ import com.sh.ilovepooq.R;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 

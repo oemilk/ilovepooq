@@ -1,4 +1,4 @@
-package com.sh.ilovepooq.view;
+package com.sh.ilovepooq.MVC.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,9 +15,9 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.sh.ilovepooq.Constants;
 import com.sh.ilovepooq.R;
-import com.sh.ilovepooq.controller.URLImageLoader;
-import com.sh.ilovepooq.controller.URLImageLoaderCallback;
-import com.sh.ilovepooq.model.ContentInfoModel;
+import com.sh.ilovepooq.MVC.controller.URLImageLoader;
+import com.sh.ilovepooq.MVC.controller.URLImageLoaderCallback;
+import com.sh.ilovepooq.MVC.model.ContentInfoModel;
 
 import java.util.ArrayList;
 

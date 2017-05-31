@@ -1,4 +1,4 @@
-package com.sh.ilovepooq.view;
+package com.sh.ilovepooq.MVC.view;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -23,19 +23,19 @@ import android.widget.TextView;
 
 import com.sh.ilovepooq.Constants;
 import com.sh.ilovepooq.R;
-import com.sh.ilovepooq.controller.HTMLParsingAsyncTask;
-import com.sh.ilovepooq.controller.HTMLParsingCallback;
-import com.sh.ilovepooq.controller.HTMLParsingThread;
-import com.sh.ilovepooq.controller.URLImageLoader;
-import com.sh.ilovepooq.model.ContentInfoModel;
+import com.sh.ilovepooq.MVC.controller.HTMLParsingAsyncTask;
+import com.sh.ilovepooq.MVC.controller.HTMLParsingCallback;
+import com.sh.ilovepooq.MVC.controller.HTMLParsingThread;
+import com.sh.ilovepooq.MVC.controller.URLImageLoader;
+import com.sh.ilovepooq.MVC.model.ContentInfoModel;
 import com.sh.ilovepooq.utils.NetworkUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MVCMainActivity extends AppCompatActivity {
 
-    private final String TAG = "MainActivity";
+    private final String TAG = "MVCMainActivity";
 
     public final int LIST_LAYOUT_MANAGER_TYPE = 0;
     public final int GRID_LAYOUT_MANAGER_TYPE = 1;
@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_mvc_main);
         Log.d(TAG, "onCreate");
         init();
     }
@@ -135,9 +135,9 @@ public class MainActivity extends AppCompatActivity {
         if (!list.isEmpty()) {
             Log.d(TAG, "List is not empty.");
             mURLImageLoader = URLImageLoader.getInstance();
-            mURLImageLoader.init(MainActivity.this);
+            mURLImageLoader.init(MVCMainActivity.this);
 //            mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, list, mURLImageLoader);
-            mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, list);
+            mRecyclerViewAdapter = new RecyclerViewAdapter(MVCMainActivity.this, list);
             mRecyclerView.setAdapter(mRecyclerViewAdapter);
             mToolbarMenu.findItem(R.id.action_layout).setVisible(true);
         } else {
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showErrorDialog(String title, String message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MVCMainActivity.this);
         builder.setTitle(title);
         builder.setMessage(message);
         builder.setCancelable(false);

@@ -1,11 +1,11 @@
-package com.sh.ilovepooq.controller;
+package com.sh.ilovepooq.MVC.controller;
 
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
 import com.sh.ilovepooq.Constants;
-import com.sh.ilovepooq.model.ContentInfoModel;
+import com.sh.ilovepooq.MVC.model.ContentInfoModel;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;

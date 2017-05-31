@@ -1,4 +1,4 @@
-package com.sh.ilovepooq.controller;
+package com.sh.ilovepooq.MVC.controller;
 
 public interface URLImageLoaderCallback {
     void onLoadingImageSucceed();
