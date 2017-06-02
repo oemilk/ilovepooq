@@ -16,7 +16,8 @@
     <!-- toast -->
     <string name="toast_no_link_url">There is no link url.</string>
 
-    <!-- mvc -->
+    <!-- pattern -->
     <string name="textview_mvc_text">MVC</string>
+    <string name="textview_mvp_text">MVP</string>
 
 </resources>
