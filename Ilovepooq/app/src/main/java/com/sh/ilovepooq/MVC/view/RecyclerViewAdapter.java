@@ -15,43 +15,44 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.sh.ilovepooq.Constants;
 import com.sh.ilovepooq.R;
-import com.sh.ilovepooq.MVC.controller.URLImageLoaderCallback;
 import com.sh.ilovepooq.MVC.model.ContentInfoModel;
 
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private final String TAG = "RecyclerViewAdapter";
+    private static final String TAG = "RecyclerViewAdapter";
 
-    public final int LIST_LAYOUT_MANAGER_TYPE = 0;
-    public final int GRID_LAYOUT_MANAGER_TYPE = 1;
+    public static final int LIST_LAYOUT_MANAGER_TYPE = 0;
+    public static final int GRID_LAYOUT_MANAGER_TYPE = 1;
 
-    private Context mContext;
-    private ArrayList<ContentInfoModel> mList;
-    private int mLayoutManagerType;
+    private Context context;
+    private ArrayList<ContentInfoModel> list;
+    private int layoutManagerType;
 
     public RecyclerViewAdapter(Context context, ArrayList<ContentInfoModel> list) {
-        mContext = context;
-        mList = list;
-        mLayoutManagerType = LIST_LAYOUT_MANAGER_TYPE;
+        this.context = context;
+        this.list = list;
+        layoutManagerType = LIST_LAYOUT_MANAGER_TYPE;
     }
 
     @Override
     public int getItemCount() {
-        return mList.size();
+        return list.size();
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Log.d(TAG, "onCreateViewHolder");
-        View view = LayoutInflater.from(parent.getContext()).inflate(mLayoutManagerType == LIST_LAYOUT_MANAGER_TYPE ? R.layout.item_list_row : R.layout.item_grid_row, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(layoutManagerType
+                == LIST_LAYOUT_MANAGER_TYPE ? R.layout.item_list_row
+                : R.layout.item_grid_row, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final ContentInfoModel model = mList.get(position);
+        final ContentInfoModel model = list.get(position);
         final String imageURL = model.getImageURL();
         final String alt = model.getAlt();
         final String title = model.getTitle();
@@ -86,23 +87,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private void startBrowserIntent(String hyperlink) {
         Log.d(TAG, "startBrowserIntent : " + hyperlink);
         if (hyperlink.isEmpty()) {
-            Toast.makeText(mContext, mContext.getString(R.string.toast_no_link_url), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, context.getString(R.string.toast_no_link_url), Toast
+                    .LENGTH_LONG).show();
         } else {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(hyperlink));
-            mContext.startActivity(browserIntent);
+            context.startActivity(browserIntent);
         }
     }
 
     private void displayIamge(final ContentInfoModel model, ImageView imageView) {
         Glide
-                .with(mContext)
+                .with(context)
                 .load(model.getImageURL())
                 .into(imageView)
-                .onLoadStarted(mContext.getDrawable(R.drawable.item_no_image));
+                .onLoadStarted(context.getDrawable(R.drawable.item_no_image));
     }
 
     protected void setLayoutManagerType(int layoutManagerType) {
-        mLayoutManagerType = layoutManagerType;
+        this.layoutManagerType = layoutManagerType;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

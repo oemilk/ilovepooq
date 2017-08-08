@@ -15,7 +15,7 @@ import javax.inject.Inject;
 
 public class MVPPresenter implements MVP.Presenter {
 
-    private final String TAG = "MVPPresenter";
+    private static final String TAG = "MVPPresenter";
 
     @Nullable
     private MVP.View view;

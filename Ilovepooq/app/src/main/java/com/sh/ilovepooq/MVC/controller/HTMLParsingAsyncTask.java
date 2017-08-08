@@ -17,12 +17,12 @@ import java.util.ArrayList;
 
 public class HTMLParsingAsyncTask extends AsyncTask<Void, Void, ArrayList<ContentInfoModel>> {
 
-    private final String TAG = "HTMLParsingAsyncTask";
+    private static final String TAG = "HTMLParsingAsyncTask";
 
-    private HTMLParsingCallback mCallback;
+    private HTMLParsingCallback callback;
 
     public HTMLParsingAsyncTask(HTMLParsingCallback callback) {
-        mCallback = callback;
+        this.callback = callback;
     }
 
     @Override
@@ -46,15 +46,15 @@ public class HTMLParsingAsyncTask extends AsyncTask<Void, Void, ArrayList<Conten
         super.onPostExecute(list);
         if (list == null) {
             Log.d(TAG, "Parsing failed");
-            mCallback.onHTMLParsingFailed();
+            callback.onHTMLParsingFailed();
         } else {
             Log.d(TAG, "Parsing succeed");
-            mCallback.onHTMLParsingSucceed(list);
+            callback.onHTMLParsingSucceed(list);
         }
     }
 
     /**
-     *  Get a parsing result as Document object.
+     * Get a parsing result as Document object.
      *
      * @return an objcet of Document.
      */
@@ -63,7 +63,7 @@ public class HTMLParsingAsyncTask extends AsyncTask<Void, Void, ArrayList<Conten
             Connection connection = Jsoup.connect(Constants.PARSE_URL);
             return connection.get();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
             return null;
         }
     }
@@ -81,7 +81,10 @@ public class HTMLParsingAsyncTask extends AsyncTask<Void, Void, ArrayList<Conten
             ArrayList<ContentInfoModel> list = new ArrayList<>();
             ContentInfoModel model;
             Node node;
-            String imageURL, alt, title, hyperlink;
+            String imageURL;
+            String alt;
+            String title;
+            String hyperlink;
 
             Log.d(TAG, "size : " + elements.size());
 
@@ -90,18 +93,21 @@ public class HTMLParsingAsyncTask extends AsyncTask<Void, Void, ArrayList<Conten
                 imageURL = node.childNode(3).attr(Constants.PARSE_SRC);
                 alt = node.childNode(3).attr(Constants.PARSE_ALT);
                 title = node.childNode(1).childNode(0).toString();
-                hyperlink = node.attr(Constants.PARSE_HREF).replace("\r", "").replace("\n", "").replace("\t", "");
+                hyperlink = node.attr(Constants.PARSE_HREF).replace("\r", "").replace("\n", "")
+                        .replace("\t", "");
 
                 model = new ContentInfoModel(imageURL, alt, title, hyperlink, Constants.SUCCESS);
-                if (!imageURL.isEmpty() && !alt.isEmpty() && !title.isEmpty() && !hyperlink.isEmpty()) {
-                    Log.d(TAG, "url : " + imageURL + ", alt : " + alt + ", title : " + title + ", hyperlink : " + hyperlink);
+                if (!imageURL.isEmpty() && !alt.isEmpty()
+                        && !title.isEmpty() && !hyperlink.isEmpty()) {
+                    Log.d(TAG, "url : " + imageURL + ", alt : " + alt + ", title : " + title
+                            + ", hyperlink : " + hyperlink);
                     list.add(model);
                 }
             }
 
             return list;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
             return null;
         }
     }

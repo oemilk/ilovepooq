@@ -24,7 +24,6 @@ import android.widget.TextView;
 import com.sh.ilovepooq.Constants;
 import com.sh.ilovepooq.R;
 import com.sh.ilovepooq.MVC.controller.HTMLParsingAsyncTask;
-import com.sh.ilovepooq.MVC.controller.HTMLParsingCallback;
 import com.sh.ilovepooq.MVC.controller.HTMLParsingThread;
 import com.sh.ilovepooq.MVC.model.ContentInfoModel;
 import com.sh.ilovepooq.utils.NetworkUtils;
@@ -34,38 +33,25 @@ import java.util.ArrayList;
 
 public class MVCMainActivity extends AppCompatActivity {
 
-    private final String TAG = "MVCMainActivity";
+    private static final String TAG = "MVCMainActivity";
 
-    public final int LIST_LAYOUT_MANAGER_TYPE = 0;
-    public final int GRID_LAYOUT_MANAGER_TYPE = 1;
-    public final int LIST_SPAN_COUNT = 2;
-    public final int GRID_SPAN_COUNT = 3;
+    public static final int LIST_LAYOUT_MANAGER_TYPE = 0;
+    public static final int GRID_LAYOUT_MANAGER_TYPE = 1;
+    public static final int LIST_SPAN_COUNT = 2;
+    public static final int GRID_SPAN_COUNT = 3;
 
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerViewAdapter mRecyclerViewAdapter;
-    private ProgressBar mProgressBar;
-    private Menu mToolbarMenu;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerViewAdapter recyclerViewAdapter;
+    private ProgressBar progressBar;
+    private Menu toolbarMenu;
 
-    private int mCurrentLayoutManagerType;
-    private int mSpanCount;
+    private int currentLayoutManagerType;
+    private int spanCount;
 
-    private HTMLParsingAsyncTask mHTMLParsingAsyncTask = null;
+    private HTMLParsingAsyncTask htmlParsingAsyncTask = null;
 
-    private HTMLParsingCallback mHtmlParsingCallback = new HTMLParsingCallback() {
-        @Override
-        public void onHTMLParsingSucceed(ArrayList<ContentInfoModel> list) {
-            Log.d(TAG, "parsing success");
-            setRecyclerViewUI(list);
-        }
-
-        @Override
-        public void onHTMLParsingFailed() {
-            Log.d(TAG, "parsing fail");
-            showErrorDialog(getString(R.string.dialog_parsing_error_title),
-                    getString(R.string.dialog_parsing_error_message));
-        }
-    };
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,23 +69,22 @@ public class MVCMainActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             getSupportActionBar().getThemedContext();
 
-            mProgressBar = (ProgressBar) findViewById(R.id.loading);
-            mProgressBar.setVisibility(View.VISIBLE);
+            progressBar = (ProgressBar) findViewById(R.id.loading);
+            progressBar.setVisibility(View.VISIBLE);
 
-            mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-            mRecyclerView.setHasFixedSize(true);
+            recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+            recyclerView.setHasFixedSize(true);
 
-            mLayoutManager = new LinearLayoutManager(this);
-            mCurrentLayoutManagerType = LIST_LAYOUT_MANAGER_TYPE;
-            setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+            layoutManager = new LinearLayoutManager(this);
+            currentLayoutManagerType = LIST_LAYOUT_MANAGER_TYPE;
+            setRecyclerViewLayoutManager(currentLayoutManagerType);
             parsingHTMLURL();
         } else {
             Log.d(TAG, "Network is not fine.");
-            showErrorDialog(getString(R.string.dialog_disconnected_network_title), getString(R.string.dialog_disconnected_network_message));
+            showErrorDialog(getString(R.string.dialog_disconnected_network_title),
+                    getString(R.string.dialog_disconnected_network_message));
         }
     }
-
-    private Handler mHandler;
 
     private void parsingHTMLURL() {
         Log.d(TAG, "parsingHTMLURL");
@@ -108,7 +93,7 @@ public class MVCMainActivity extends AppCompatActivity {
 //        mHTMLParsingAsyncTask.execute();
 
         // Ues a thread for getting datas
-        mHandler = new Handler(Looper.getMainLooper()) {
+        handler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what == HTMLParsingThread.SUCCESS) {
@@ -122,19 +107,18 @@ public class MVCMainActivity extends AppCompatActivity {
             }
         };
 
-        HTMLParsingThread thread = new HTMLParsingThread(mHandler);
+        HTMLParsingThread thread = new HTMLParsingThread(handler);
         thread.start();
 
     }
 
     private void setRecyclerViewUI(ArrayList<ContentInfoModel> list) {
-        mProgressBar.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
         if (!list.isEmpty()) {
             Log.d(TAG, "List is not empty.");
-//            mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, list, mURLImageLoader);
-            mRecyclerViewAdapter = new RecyclerViewAdapter(MVCMainActivity.this, list);
-            mRecyclerView.setAdapter(mRecyclerViewAdapter);
-            mToolbarMenu.findItem(R.id.action_layout).setVisible(true);
+            recyclerViewAdapter = new RecyclerViewAdapter(MVCMainActivity.this, list);
+            recyclerView.setAdapter(recyclerViewAdapter);
+            toolbarMenu.findItem(R.id.action_layout).setVisible(true);
         } else {
             Log.d(TAG, "List is empty.");
             TextView textView = (TextView) findViewById(R.id.textview);
@@ -147,40 +131,42 @@ public class MVCMainActivity extends AppCompatActivity {
 
         int scrollPosition = 0;
 
-        if (mRecyclerView.getLayoutManager() != null) {
-            scrollPosition = ((LinearLayoutManager) mRecyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+        if (recyclerView.getLayoutManager() != null) {
+            scrollPosition = ((LinearLayoutManager) recyclerView.getLayoutManager())
+                    .findFirstVisibleItemPosition();
             Log.d(TAG, "scrollPosition : " + scrollPosition);
         }
 
         switch (layoutManagerType) {
             case GRID_LAYOUT_MANAGER_TYPE:
                 Log.d(TAG, "GRID_LAYOUT_MANAGER_TYPE");
-                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                    mSpanCount = GRID_SPAN_COUNT;
+                if (getResources().getConfiguration().orientation
+                        == Configuration.ORIENTATION_LANDSCAPE) {
+                    spanCount = GRID_SPAN_COUNT;
                 } else {
-                    mSpanCount = LIST_SPAN_COUNT;
+                    spanCount = LIST_SPAN_COUNT;
                 }
-                mLayoutManager = new GridLayoutManager(this, mSpanCount);
-                mCurrentLayoutManagerType = GRID_LAYOUT_MANAGER_TYPE;
+                layoutManager = new GridLayoutManager(this, spanCount);
+                currentLayoutManagerType = GRID_LAYOUT_MANAGER_TYPE;
                 break;
             case LIST_LAYOUT_MANAGER_TYPE:
                 Log.d(TAG, "LIST_LAYOUT_MANAGER_TYPE");
-                mLayoutManager = new LinearLayoutManager(this);
-                mCurrentLayoutManagerType = LIST_LAYOUT_MANAGER_TYPE;
+                layoutManager = new LinearLayoutManager(this);
+                currentLayoutManagerType = LIST_LAYOUT_MANAGER_TYPE;
                 break;
             default:
                 Log.d(TAG, "default");
-                mLayoutManager = new LinearLayoutManager(this);
-                mCurrentLayoutManagerType = LIST_LAYOUT_MANAGER_TYPE;
+                layoutManager = new LinearLayoutManager(this);
+                currentLayoutManagerType = LIST_LAYOUT_MANAGER_TYPE;
         }
 
-        if (mRecyclerViewAdapter != null) {
-            mRecyclerViewAdapter.setLayoutManagerType(mCurrentLayoutManagerType);
-            mRecyclerView.setAdapter(mRecyclerViewAdapter);
+        if (recyclerViewAdapter != null) {
+            recyclerViewAdapter.setLayoutManagerType(currentLayoutManagerType);
+            recyclerView.setAdapter(recyclerViewAdapter);
         }
 
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.scrollToPosition(scrollPosition);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.scrollToPosition(scrollPosition);
     }
 
     private void showErrorDialog(String title, String message) {
@@ -219,7 +205,7 @@ public class MVCMainActivity extends AppCompatActivity {
         menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (mCurrentLayoutManagerType == LIST_LAYOUT_MANAGER_TYPE) {
+                if (currentLayoutManagerType == LIST_LAYOUT_MANAGER_TYPE) {
                     Log.d(TAG, "onMenuItemClick list");
                     menuItem.setIcon(getDrawable(R.drawable.ic_view_list));
                     setRecyclerViewLayoutManager(GRID_LAYOUT_MANAGER_TYPE);
@@ -231,7 +217,7 @@ public class MVCMainActivity extends AppCompatActivity {
                 return false;
             }
         });
-        mToolbarMenu = menu;
+        toolbarMenu = menu;
         return true;
     }
 
@@ -239,23 +225,23 @@ public class MVCMainActivity extends AppCompatActivity {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
 
-        if (mCurrentLayoutManagerType == GRID_LAYOUT_MANAGER_TYPE) {
+        if (currentLayoutManagerType == GRID_LAYOUT_MANAGER_TYPE) {
             Log.d(TAG, "mCurrentLayoutManagerType is GRID_LAYOUT_MANAGER");
             if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
                 Log.d(TAG, "onConfigurationChanged : ORIENTATION_LANDSCAPE");
-                mSpanCount = GRID_SPAN_COUNT;
+                spanCount = GRID_SPAN_COUNT;
             } else {
                 Log.d(TAG, "onConfigurationChanged : ORIENTATION_PORTRAIT");
-                mSpanCount = LIST_SPAN_COUNT;
+                spanCount = LIST_SPAN_COUNT;
             }
-            ((GridLayoutManager) mLayoutManager).setSpanCount(mSpanCount);
+            ((GridLayoutManager) layoutManager).setSpanCount(spanCount);
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
         Log.d(TAG, "onSaveInstanceState");
-        outState.putSerializable(Constants.BUNDLE_KEY_LAYOUT_MANAGER, mCurrentLayoutManagerType);
+        outState.putSerializable(Constants.BUNDLE_KEY_LAYOUT_MANAGER, currentLayoutManagerType);
         super.onSaveInstanceState(outState, outPersistentState);
     }
 
@@ -263,10 +249,12 @@ public class MVCMainActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         Log.d(TAG, "onRestoreInstanceState");
         if (savedInstanceState != null) {
-            Serializable serializable = savedInstanceState.getSerializable(Constants.BUNDLE_KEY_LAYOUT_MANAGER);
+            Serializable serializable = savedInstanceState
+                    .getSerializable(Constants.BUNDLE_KEY_LAYOUT_MANAGER);
             if (serializable != null) {
-                mCurrentLayoutManagerType = (int) savedInstanceState.getSerializable(Constants.BUNDLE_KEY_LAYOUT_MANAGER);
-                setRecyclerViewLayoutManager(mCurrentLayoutManagerType);
+                currentLayoutManagerType = (int) savedInstanceState
+                        .getSerializable(Constants.BUNDLE_KEY_LAYOUT_MANAGER);
+                setRecyclerViewLayoutManager(currentLayoutManagerType);
             }
         }
         super.onRestoreInstanceState(savedInstanceState);
@@ -276,8 +264,8 @@ public class MVCMainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy");
-        if (mHTMLParsingAsyncTask != null) {
-            mHTMLParsingAsyncTask.cancel(true);
+        if (htmlParsingAsyncTask != null) {
+            htmlParsingAsyncTask.cancel(true);
         }
     }
 }

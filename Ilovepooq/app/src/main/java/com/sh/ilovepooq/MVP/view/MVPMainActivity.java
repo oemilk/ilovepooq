@@ -30,9 +30,9 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 
-public class MVPMainActivity extends AppCompatActivity implements MVP.View{
+public class MVPMainActivity extends AppCompatActivity implements MVP.View {
 
-    private final String TAG = "MainActivity";
+    private static final String TAG = "MainActivity";
 
     @Inject
     MVP.Presenter presenter;
@@ -40,10 +40,10 @@ public class MVPMainActivity extends AppCompatActivity implements MVP.View{
     @Inject
     AdapterMVP.View adapterView;
 
-    public final int LIST_LAYOUT_MANAGER_TYPE = 0;
-    public final int GRID_LAYOUT_MANAGER_TYPE = 1;
-    public final int LIST_SPAN_COUNT = 2;
-    public final int GRID_SPAN_COUNT = 3;
+    public static final int LIST_LAYOUT_MANAGER_TYPE = 0;
+    public static final int GRID_LAYOUT_MANAGER_TYPE = 1;
+    public static final int LIST_SPAN_COUNT = 2;
+    public static final int GRID_SPAN_COUNT = 3;
 
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
@@ -62,7 +62,8 @@ public class MVPMainActivity extends AppCompatActivity implements MVP.View{
 
         recyclerViewAdapter = new RecyclerViewAdapter(this);
 
-        DaggerComponent.builder().module(new Module(recyclerViewAdapter, this)).build().inject(this);
+        DaggerComponent.builder().module(new Module(recyclerViewAdapter, this)).build()
+                .inject(this);
         presenter.init(this);
     }
 
@@ -118,9 +119,11 @@ public class MVPMainActivity extends AppCompatActivity implements MVP.View{
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         Log.d(TAG, "onRestoreInstanceState");
         if (savedInstanceState != null) {
-            Serializable serializable = savedInstanceState.getSerializable(Constants.BUNDLE_KEY_LAYOUT_MANAGER);
+            Serializable serializable = savedInstanceState
+                    .getSerializable(Constants.BUNDLE_KEY_LAYOUT_MANAGER);
             if (serializable != null) {
-                currentLayoutManagerType = (int) savedInstanceState.getSerializable(Constants.BUNDLE_KEY_LAYOUT_MANAGER);
+                currentLayoutManagerType = (int) savedInstanceState
+                        .getSerializable(Constants.BUNDLE_KEY_LAYOUT_MANAGER);
                 setRecyclerViewLayoutManager(currentLayoutManagerType);
             }
         }
@@ -180,14 +183,16 @@ public class MVPMainActivity extends AppCompatActivity implements MVP.View{
         int scrollPosition = 0;
 
         if (recyclerView.getLayoutManager() != null) {
-            scrollPosition = ((LinearLayoutManager) recyclerView.getLayoutManager()).findFirstVisibleItemPosition();
+            scrollPosition = ((LinearLayoutManager) recyclerView.getLayoutManager())
+                    .findFirstVisibleItemPosition();
             Log.d(TAG, "scrollPosition : " + scrollPosition);
         }
 
         switch (layoutManagerType) {
             case GRID_LAYOUT_MANAGER_TYPE:
                 Log.d(TAG, "GRID_LAYOUT_MANAGER_TYPE");
-                if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                if (getResources().getConfiguration().orientation
+                        == Configuration.ORIENTATION_LANDSCAPE) {
                     spanCount = GRID_SPAN_COUNT;
                 } else {
                     spanCount = LIST_SPAN_COUNT;

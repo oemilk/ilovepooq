@@ -16,12 +16,12 @@ import java.io.InputStream;
 
 public class TestHTMLParsingAsyncTask extends AndroidTestCase {
 
-    private Context mTestContext;
+    private Context context;
 
     @Override
     public void setContext(Context context) {
         super.setContext(context);
-        mTestContext = context;
+        this.context = context;
     }
 
     public void testGetDocument() throws Exception {
@@ -31,7 +31,7 @@ public class TestHTMLParsingAsyncTask extends AndroidTestCase {
     }
 
     public void testParsing() throws Exception {
-        InputStream inputStream = mTestContext.getResources().openRawResource(R.raw.test_html_parsing);
+        InputStream inputStream = context.getResources().openRawResource(R.raw.test_html_parsing);
         Document document = Jsoup.parse(inputStream, null, "");
         Elements elements = document.select(Constants.PARSE_SBSMD_MCMPT_W);
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class MVPModel implements MVP.Model {
 
-    private final static String TAG = "MVPModel";
+    private static final String TAG = "MVPModel";
 
     private MVP.Presenter presenter;
 

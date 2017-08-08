@@ -18,15 +18,13 @@ import java.util.ArrayList;
 
 public class HTMLParsingThread extends Thread {
 
-    private String TAG = "HTMLParsingThread";
-
     public static final int SUCCESS = 0;
     public static final int FAIL = 1;
-
-    private Handler mHandler;
+    private static final String TAG = "HTMLParsingThread";
+    private Handler handler;
 
     public HTMLParsingThread(Handler handler) {
-        mHandler = handler;
+        this.handler = handler;
     }
 
     @Override
@@ -45,9 +43,9 @@ public class HTMLParsingThread extends Thread {
             }
         } catch (Exception e) {
             message.what = FAIL;
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
         } finally {
-            mHandler.sendMessage(message);
+            handler.sendMessage(message);
         }
     }
 
@@ -61,7 +59,7 @@ public class HTMLParsingThread extends Thread {
             Connection connection = Jsoup.connect(Constants.PARSE_URL);
             return connection.get();
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
             return null;
         }
     }
@@ -79,7 +77,10 @@ public class HTMLParsingThread extends Thread {
             ArrayList<ContentInfoModel> list = new ArrayList<>();
             ContentInfoModel model;
             Node node;
-            String imageURL, alt, title, hyperlink;
+            String imageURL;
+            String alt;
+            String title;
+            String hyperlink;
 
             Log.d(TAG, "size : " + elements.size());
 
@@ -89,21 +90,25 @@ public class HTMLParsingThread extends Thread {
                     imageURL = node.childNode(3).attr(Constants.PARSE_SRC);
                     alt = node.childNode(3).attr(Constants.PARSE_ALT);
                     title = node.childNode(1).childNode(0).toString();
-                    hyperlink = node.attr(Constants.PARSE_HREF).replace("\r", "").replace("\n", "").replace("\t", "");
+                    hyperlink = node.attr(Constants.PARSE_HREF).replace("\r", "").replace("\n", "")
+                            .replace("\t", "");
 
-                    model = new ContentInfoModel(imageURL, alt, title, hyperlink, Constants.SUCCESS);
-                    if (!imageURL.isEmpty() && !alt.isEmpty() && !title.isEmpty() && !hyperlink.isEmpty()) {
-                        Log.d(TAG, "url : " + imageURL + ", alt : " + alt + ", title : " + title + ", hyperlink : " + hyperlink);
+                    model = new ContentInfoModel(imageURL, alt, title, hyperlink,
+                            Constants.SUCCESS);
+                    if (!imageURL.isEmpty() && !alt.isEmpty() && !title.isEmpty()
+                            && !hyperlink.isEmpty()) {
+                        Log.d(TAG, "url : " + imageURL + ", alt : " + alt + ", title : " + title
+                                + ", hyperlink : " + hyperlink);
                         list.add(model);
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Log.e(TAG, e.getMessage());
                 }
             }
 
             return list;
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
             return null;
         }
     }

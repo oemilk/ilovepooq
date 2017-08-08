@@ -8,7 +8,8 @@ public class ContentInfoModel {
     private String hyperlink;
     private int loadingResult;
 
-    public ContentInfoModel(String imageURL, String alt, String title, String hyperlink, int loadingResult) {
+    public ContentInfoModel(String imageURL, String alt, String title, String hyperlink,
+                            int loadingResult) {
         this.imageURL = imageURL;
         this.alt = alt;
         this.title = title;
