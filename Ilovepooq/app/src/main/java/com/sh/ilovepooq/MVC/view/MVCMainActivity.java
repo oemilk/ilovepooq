@@ -26,7 +26,6 @@ import com.sh.ilovepooq.R;
 import com.sh.ilovepooq.MVC.controller.HTMLParsingAsyncTask;
 import com.sh.ilovepooq.MVC.controller.HTMLParsingCallback;
 import com.sh.ilovepooq.MVC.controller.HTMLParsingThread;
-import com.sh.ilovepooq.MVC.controller.URLImageLoader;
 import com.sh.ilovepooq.MVC.model.ContentInfoModel;
 import com.sh.ilovepooq.utils.NetworkUtils;
 
@@ -47,8 +46,6 @@ public class MVCMainActivity extends AppCompatActivity {
     private RecyclerViewAdapter mRecyclerViewAdapter;
     private ProgressBar mProgressBar;
     private Menu mToolbarMenu;
-
-    private URLImageLoader mURLImageLoader;
 
     private int mCurrentLayoutManagerType;
     private int mSpanCount;
@@ -134,8 +131,6 @@ public class MVCMainActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.GONE);
         if (!list.isEmpty()) {
             Log.d(TAG, "List is not empty.");
-            mURLImageLoader = URLImageLoader.getInstance();
-            mURLImageLoader.init(MVCMainActivity.this);
 //            mRecyclerViewAdapter = new RecyclerViewAdapter(MainActivity.this, list, mURLImageLoader);
             mRecyclerViewAdapter = new RecyclerViewAdapter(MVCMainActivity.this, list);
             mRecyclerView.setAdapter(mRecyclerViewAdapter);
@@ -283,9 +278,6 @@ public class MVCMainActivity extends AppCompatActivity {
         Log.d(TAG, "onDestroy");
         if (mHTMLParsingAsyncTask != null) {
             mHTMLParsingAsyncTask.cancel(true);
-        }
-        if (mURLImageLoader != null) {
-            mURLImageLoader.destroy();
         }
     }
 }

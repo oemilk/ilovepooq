@@ -37,10 +37,6 @@ dependencies {
     // jsoup - HTML parser library @ https://jsoup.org/
     compile 'org.jsoup:jsoup:1.10.3'
 
-    // [Decrecated] universal-image-loader
-    // @ https://github.com/nostra13/Android-Universal-Image-Loader
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-
     // glide - An image loading and caching library for Android @ https://github.com/bumptech/glide
     compile 'com.github.bumptech.glide:glide:4.0.0'
 
