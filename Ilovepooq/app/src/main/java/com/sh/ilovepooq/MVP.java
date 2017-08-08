@@ -1,8 +1,8 @@
-package com.sh.ilovepooq.MVP;
+package com.sh.ilovepooq;
 
 import android.content.Context;
 
-import com.sh.ilovepooq.MVP.model.ContentInfoModel;
+import com.sh.ilovepooq.model.ContentInfoModel;
 
 import java.util.ArrayList;
 

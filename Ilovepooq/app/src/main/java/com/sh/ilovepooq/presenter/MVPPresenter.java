@@ -1,11 +1,11 @@
-package com.sh.ilovepooq.MVP.presenter;
+package com.sh.ilovepooq.presenter;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.sh.ilovepooq.MVP.AdapterMVP;
-import com.sh.ilovepooq.MVP.MVP;
-import com.sh.ilovepooq.MVP.model.ContentInfoModel;
+import com.sh.ilovepooq.AdapterMVP;
+import com.sh.ilovepooq.MVP;
+import com.sh.ilovepooq.model.ContentInfoModel;
 import com.sh.ilovepooq.utils.NetworkUtils;
 
 import java.util.ArrayList;

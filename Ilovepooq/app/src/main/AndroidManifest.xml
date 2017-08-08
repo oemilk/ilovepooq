@@ -22,11 +22,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".MVP.view.MVPMainActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden">
-        </activity>
-
     </application>
 
 </manifest>

@@ -1,10 +1,10 @@
-package com.sh.ilovepooq.MVP.dagger;
+package com.sh.ilovepooq.dagger;
 
-import com.sh.ilovepooq.MVP.AdapterMVP;
-import com.sh.ilovepooq.MVP.MVP;
-import com.sh.ilovepooq.MVP.model.MVPModel;
-import com.sh.ilovepooq.MVP.presenter.MVPPresenter;
-import com.sh.ilovepooq.MVP.view.RecyclerViewAdapter;
+import com.sh.ilovepooq.AdapterMVP;
+import com.sh.ilovepooq.MVP;
+import com.sh.ilovepooq.model.MVPModel;
+import com.sh.ilovepooq.presenter.MVPPresenter;
+import com.sh.ilovepooq.view.RecyclerViewAdapter;
 
 import dagger.Provides;
 

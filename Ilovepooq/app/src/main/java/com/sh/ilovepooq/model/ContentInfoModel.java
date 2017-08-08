@@ -1,4 +1,4 @@
-package com.sh.ilovepooq.MVP.model;
+package com.sh.ilovepooq.model;
 
 public class ContentInfoModel {
 

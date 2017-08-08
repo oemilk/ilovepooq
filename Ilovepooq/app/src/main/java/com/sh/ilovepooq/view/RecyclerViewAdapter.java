@@ -1,4 +1,4 @@
-package com.sh.ilovepooq.MVP.view;
+package com.sh.ilovepooq.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,9 +14,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.sh.ilovepooq.Constants;
-import com.sh.ilovepooq.MVP.model.ContentInfoModel;
-import com.sh.ilovepooq.MVP.AdapterMVP;
+import com.sh.ilovepooq.AdapterMVP;
 import com.sh.ilovepooq.R;
+import com.sh.ilovepooq.model.ContentInfoModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,7 +115,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .into(imageView);
     }
 
-    protected void setLayoutManagerType(int layoutManagerType) {
+    public void setLayoutManagerType(int layoutManagerType) {
         this.layoutManagerType = layoutManagerType;
     }
 

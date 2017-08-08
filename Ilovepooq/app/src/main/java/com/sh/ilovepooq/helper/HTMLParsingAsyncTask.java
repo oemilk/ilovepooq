@@ -1,10 +1,10 @@
-package com.sh.ilovepooq.MVP.helper;
+package com.sh.ilovepooq.helper;
 
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.sh.ilovepooq.Constants;
-import com.sh.ilovepooq.MVP.model.ContentInfoModel;
+import com.sh.ilovepooq.model.ContentInfoModel;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;

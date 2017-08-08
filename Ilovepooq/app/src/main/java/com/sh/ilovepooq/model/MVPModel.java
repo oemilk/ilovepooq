@@ -1,10 +1,10 @@
-package com.sh.ilovepooq.MVP.model;
+package com.sh.ilovepooq.model;
 
 import android.util.Log;
 
-import com.sh.ilovepooq.MVP.helper.HTMLParsingAsyncTask;
-import com.sh.ilovepooq.MVP.helper.HTMLParsingCallback;
-import com.sh.ilovepooq.MVP.MVP;
+import com.sh.ilovepooq.MVP;
+import com.sh.ilovepooq.helper.HTMLParsingAsyncTask;
+import com.sh.ilovepooq.helper.HTMLParsingCallback;
 
 import java.util.ArrayList;
 

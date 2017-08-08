@@ -1,6 +1,6 @@
-package com.sh.ilovepooq.MVP.helper;
+package com.sh.ilovepooq.helper;
 
-import com.sh.ilovepooq.MVP.model.ContentInfoModel;
+import com.sh.ilovepooq.model.ContentInfoModel;
 
 import java.util.ArrayList;
 
