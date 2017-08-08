@@ -109,7 +109,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private void displayIamge(final ContentInfoModel model, ImageView imageView) {
         Glide.with(mContext)
                 .load(model.getImageURL())
-                .crossFade()
                 .into(imageView);
     }
 

@@ -107,7 +107,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             Glide
                     .with(mContext)
                     .load(model.getImageURL())
-                    .crossFade()
                     .into(imageView)
                     .onLoadStarted(mContext.getDrawable(R.drawable.item_no_image));
         } else {
