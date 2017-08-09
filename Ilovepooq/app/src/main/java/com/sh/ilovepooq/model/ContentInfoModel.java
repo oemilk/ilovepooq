@@ -6,15 +6,12 @@ public class ContentInfoModel {
     private String alt;
     private String title;
     private String hyperlink;
-    private int loadingResult;
 
-    public ContentInfoModel(String imageURL, String alt, String title, String hyperlink,
-                            int loadingResult) {
+    public ContentInfoModel(String imageURL, String alt, String title, String hyperlink) {
         this.imageURL = imageURL;
         this.alt = alt;
         this.title = title;
         this.hyperlink = hyperlink;
-        this.loadingResult = loadingResult;
     }
 
     public String getImageURL() {
@@ -47,14 +44,6 @@ public class ContentInfoModel {
 
     public void setHyperlink(String hyperlink) {
         this.hyperlink = hyperlink;
-    }
-
-    public int getLoadingResult() {
-        return loadingResult;
-    }
-
-    public void setLoadingResult(int loadingResult) {
-        this.loadingResult = loadingResult;
     }
 
 }

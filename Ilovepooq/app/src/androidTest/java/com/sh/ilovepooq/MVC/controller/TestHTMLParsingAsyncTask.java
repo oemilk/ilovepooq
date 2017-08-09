@@ -3,7 +3,7 @@ package com.sh.ilovepooq.MVC.controller;
 import android.content.Context;
 import android.test.AndroidTestCase;
 
-import com.sh.ilovepooq.Constants;
+import com.sh.ilovepooq.base.Constants;
 import com.sh.ilovepooq.R;
 
 import org.jsoup.Connection;

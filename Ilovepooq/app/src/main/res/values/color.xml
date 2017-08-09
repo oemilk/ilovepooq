@@ -5,5 +5,6 @@
     <color name="colorPrimary">#7f47be</color>
     <color name="colorPrimaryDark">#7f47be</color>
     <color name="colorGridTextBackground">#55000000</color>
+    <color name="colorToolbarTitle">#FFFFFF</color>
 
 </resources>

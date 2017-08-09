@@ -8,7 +8,7 @@
     <string name="dialog_parsing_error_message">Please restart application.</string>
 
     <!-- main activity -->
-    <string name="textview_no_item_text">No item</string>
+    <string name="text_no_item">No item</string>
 
     <!-- image -->
     <string name="imageview_transition_name">image</string>
