@@ -27,6 +27,7 @@ task checkstyle(type: Checkstyle, group: 'Verification', description: 'Runs code
     configFile file("$qualityConfigDir/checkstyle/checkstyle-config.xml")
     source 'src'
     include '**/*.java'
+    exclude '**/LogUtils.java'
 
     reports {
         xml.enabled = true
