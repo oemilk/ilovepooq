@@ -3,7 +3,6 @@ package com.sh.ilovepooq.main.presenter;
 import com.sh.ilovepooq.base.BaseContract;
 import com.sh.ilovepooq.main.MainGridContract;
 import com.sh.ilovepooq.model.ContentInfoModel;
-import com.sh.ilovepooq.utils.LogUtils;
 
 import java.util.List;
 
@@ -14,8 +13,6 @@ import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainGridPresenter implements MainGridContract.Presenter {
-
-    private static final String TAG = LogUtils.makeLogTag(MainGridPresenter.class);
 
     private final CompositeDisposable disposable = new CompositeDisposable();
 
@@ -47,7 +44,6 @@ public class MainGridPresenter implements MainGridContract.Presenter {
                         .subscribeWith(new DisposableSingleObserver<List<ContentInfoModel>>() {
                             @Override
                             public void onSuccess(@NonNull List<ContentInfoModel> list) {
-                                LogUtils.d(TAG, "onSuccess");
                                 if (list.isEmpty()) {
                                     view.showEmpty();
                                 } else {
@@ -57,7 +53,6 @@ public class MainGridPresenter implements MainGridContract.Presenter {
 
                             @Override
                             public void onError(@NonNull Throwable e) {
-                                LogUtils.d(TAG, "onError" + e.getMessage());
                                 view.showError(e.getMessage());
                             }
                         })
