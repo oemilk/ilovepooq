@@ -7,85 +7,71 @@ This is a project for 1st code review interview.
 ![alt tag](https://github.com/oemilk/images/blob/master/ilovepooq_screenshot_01.png)
 ![alt tag](https://github.com/oemilk/images/blob/master/ilovepooq_screenshot_02.png)
 
-This can parse HTML by using the [jsoup] java library and gets content data from [SBS PD Note] website.<br />
-It use an [android universal image loader] java library for loading images.
+## Requirements
 
-## Parse HTML
+- JDK 1.8
+- [Android SDK](http://developer.android.com/sdk/index.html)
+- Target SDK version : Android M [(API 25) ](http://developer.android.com/tools/revisions/platforms.html)
+- Minimun SDK version : Android L [(API 21)](http://developer.android.com/tools/revisions/platforms.html)
+- Latest Android SDK Tools and build tools.
 
-Parsing a below HTML code structure.<br />
-If the structure is changed, codes should be modified for getting correct data.
+## Libraries and tools included:
 
-```test_html_parsing
+- Support libraries
+- RecyclerViews and CardViews
+- [RxJava 2](https://github.com/ReactiveX/RxJava) and [RxAndroid 2](https://github.com/ReactiveX/RxAndroid)
+- [Jsoup](https://jsoup.org/)
+- [Retrofit 2](http://square.github.io/retrofit/)
+- [Dagger 2](http://google.github.io/dagger/)
+- [Butterknife](https://github.com/JakeWharton/butterknife)
+- [Glide](https://github.com/bumptech/glide)
+- [google gson](https://github.com/google/gson)
+- Unit tests with [Mockito](http://mockito.org/)
+- [Checkstyle](http://checkstyle.sourceforge.net/), [PMD](https://pmd.github.io/) and [Findbugs](http://findbugs.sourceforge.net/) for code analysis
 
-    <li name="endListLi" class="pdnl_cont" style="display:none;">
-        <a href="hyperlink_01" class="pdnl_link">
-            <strong class="pdnl_name">name_01</strong>
-            <img src="image_url_01" alt="alt_01" class="pdnl_logo_img" width="180" height="180" pagespeed_url_hash="hash_01" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
-            <i class="icn pdnl_mask"></i>
-        </a>
-    </li>
+## Architecture
 
-    <li name="endListLi" class="pdnl_cont" style="display:none;">
-        <a href="hyperlink_02" class="pdnl_link">
-            <strong class="pdnl_name">name_02</strong>
-            <img src="image_url_02" alt="alt_02" class="pdnl_logo_img" width="180" height="180" pagespeed_url_hash="hash_02" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
-            <i class="icn pdnl_mask"></i>
-        </a>
-    </li>
+![](https://github.com/oemilk/images/blob/master/ilovepooq_mvp.png)
+
+It demonstrates the architecture, tools and guidelines that we use when developing for the Android platform (https://github.com/ribot/android-guidelines)
+
+This project follows ilovepooq's Android architecture guidelines that are based on [MVP (Model View Presenter)](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93presenter). Read more about them [here](https://github.com/googlesamples/android-architecture).
+
+![](https://github.com/oemilk/images/blob/master/ilovepooq_mvp_logic.png)
+
+## Code Quality
+
+This project integrates a combination of unit tests and code analysis tools.
+
+![](https://github.com/oemilk/images/blob/master/ilovepooq_code%20quality.png)
+
+### Tests
+
+Run unit tests
 
 ```
-
-## Generate ContentInfoModel
-
-It generates a data model from a parsing data.<br />
-This is also modified in case of parsing other structers of HTML.
-
-```content_info_model
-public class ContentInfoModel {
-
-    private String imageURL;
-    private String alt;
-    private String title;
-    private String hyperlink;
-    private int loadingResult;
-    
+./gradlew test
 ```
 
-## Load images
+### Code Analysis tools
 
-As you know, Android should consider many case of logics and performance for loading images.<br />
-So this project use [android universal image loader] and [glide].
-This is also modified in case of parsing other structers of HTML.
+[Run code analysis tools](https://github.com/oemilk/ilovepooq/wiki/3.-Check-Code-qualities#33-run-code-analysis-tools)
 
-```android_universal_image_loader
-dependencies {
-    ...
-    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    ...
-}
-    
+```
+./gradlew check
 ```
 
-## Material design
+* [Checkstyle](https://github.com/oemilk/ilovepooq/wiki/3.-Check-Code-qualities#321-checkstyle): It ensures that the code style follows [our Android code guidelines](https://github.com/oemilk/ilovepooq/wiki/2.-Code-guidelines). See our [checkstyle config file](https://github.com/oemilk/ilovepooq/blob/master/Ilovepooq/config/quality/checkstyle/checkstyle-config.xml).
 
-This project uses a [material design] for presenting list and grid UI.<br />
+* [Findbugs](https://github.com/oemilk/ilovepooq/wiki/3.-Check-Code-qualities#322-findbugs): This tool uses static analysis to find bugs in Java code. Unlike PMD, it uses compiled Java bytecode instead of source code. See [this project's Findbugs ruleset](https://github.com/oemilk/ilovepooq/blob/master/Ilovepooq/config/quality/findbugs/android-exclude-filter.xml).
 
-```material_design
-dependencies {
-    ...
-    compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.android.support:cardview-v7:23.0.1'
-    compile 'com.android.support:recyclerview-v7:23.0.1'
-    ...
-}
-```
+* [PMD](https://github.com/oemilk/ilovepooq/wiki/3.-Check-Code-qualities#323-pmd): It finds common programming flaws like unused variables, empty catch blocks, unnecessary object creation, and so forth. See [this project's PMD ruleset](https://github.com/oemilk/ilovepooq/blob/master/Ilovepooq/config/quality/pmd/pmd-ruleset.xml).
+
+## Guidelines
+
+You can see a guildlines about project and code at the [wiki page](https://github.com/oemilk/ilovepooq/wiki).
 
 If you have any questions about this project.
 Please send an email to "oemilk@naver.com".
 
-[jsoup]: https://jsoup.org/
 [SBS PD Note]: http://w3.sbs.co.kr/pdNote/pdNoteProgram.do?pdnote_div=p_program
-[android universal image loader]: https://github.com/nostra13/Android-Universal-Image-Loader
-[material design]: https://www.google.com/design/spec/material-design/introduction.html
-[glide]: https://github.com/bumptech/glide
