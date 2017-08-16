@@ -1,4 +1,4 @@
-package com.sh.ilovepooq.main.view;
+package com.sh.ilovepooq.search.view;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,21 +9,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sh.ilovepooq.R;
-import com.sh.ilovepooq.model.ContentInfoModel;
+import com.sh.ilovepooq.model.SearchImageModel;
 import com.sh.ilovepooq.utils.ImageUtils;
+import com.sh.ilovepooq.utils.TextUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.ViewHolder> {
+class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
-    private List<ContentInfoModel> list;
+    private List<SearchImageModel.Document> list;
 
     private ItemClick itemClick;
 
-    MainGridAdapter(@NonNull List<ContentInfoModel> list, @NonNull ItemClick itemClick) {
+    SearchAdapter(@NonNull List<SearchImageModel.Document> list, @NonNull ItemClick itemClick) {
         this.list = list;
         this.itemClick = itemClick;
     }
@@ -42,10 +43,11 @@ class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final ContentInfoModel model = list.get(holder.getAdapterPosition());
-        final String imageURL = model.getImageURL();
-        final String alt = model.getAlt();
-        final String title = model.getTitle();
+        final SearchImageModel.Document model = list.get(holder.getAdapterPosition());
+        final String imageURL = model.getThumbnailUrl();
+        final String alt = TextUtils.parseDateFromString(model.getDatetime());
+        final String title = model.getDisplaySitename();
+        final String hyperlink = model.getDocUrl();
 
         ImageUtils.displayIamge(imageURL, holder.imageView);
 
@@ -54,13 +56,13 @@ class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.ViewHolder> {
         holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemClick.startSearch(title);
+                itemClick.startBrowser(hyperlink);
             }
         });
     }
 
     interface ItemClick {
-        void startSearch(String searchQuery);
+        void startBrowser(String link);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
