@@ -15,7 +15,11 @@ public interface SearchContract {
 
         void showList(@NonNull List<SearchImageModel.Document> list);
 
+        void showNextPageList(@NonNull List<SearchImageModel.Document> list);
+
         void showEmpty();
+
+        void showNextPageEmpty();
 
         void showError(String message);
 
@@ -23,13 +27,17 @@ public interface SearchContract {
 
     interface Presenter extends BaseContract.Presenter {
 
-        void startSearching(String query);
+        void startSearching(@NonNull String query);
+
+        void startSearchingNextPage(@NonNull String query);
 
     }
 
     interface Repository extends BaseContract.Repository {
 
         Single<List<SearchImageModel.Document>> search(String query);
+
+        Single<List<SearchImageModel.Document>> searchNextPage(String query);
 
     }
 

@@ -30,7 +30,7 @@ public class SearchImageModel {
         this.documents = documents;
     }
 
-    class Meta {
+    public class Meta {
 
         @SerializedName("total_count")
         @Expose

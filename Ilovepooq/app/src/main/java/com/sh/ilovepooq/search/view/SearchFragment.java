@@ -40,6 +40,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
 
     private static final int PORTRAIT_SPAN_COUNT = 2;
     private static final int LANDSCAPE_SPAN_COUNT = 3;
+    private static final int LOAD_ITEM_COUNT = 10;
 
     @Inject
     SearchContract.Presenter presenter;
@@ -61,6 +62,8 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     private Unbinder unbinder;
 
     private String searchQuery;
+
+    private boolean isLoadingState;
 
     public static SearchFragment newInstance(String searchQuery) {
         Bundle args = new Bundle();
@@ -110,6 +113,20 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                GridLayoutManager manager = (GridLayoutManager) recyclerView.getLayoutManager();
+                int itemCount = manager.getItemCount();
+                int itemPosition = manager.findLastVisibleItemPosition();
+
+                if (!isLoadingState && itemCount <= itemPosition + LOAD_ITEM_COUNT) {
+                    searchNextPage();
+                }
+            }
+        });
 
         return root;
     }
@@ -118,6 +135,8 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setHasOptionsMenu(true);
+
+        progressBar.setVisibility(View.VISIBLE);
 
         presenter.setView(this);
         presenter.startSearching(searchQuery);
@@ -158,6 +177,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     @Override
     public void showList(@NonNull List list) {
         LogUtils.d(TAG, "showList");
+        progressBar.setVisibility(View.GONE);
         textView.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
         contentInfoModelList.addAll(list);
@@ -165,15 +185,42 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     }
 
     @Override
+    public void showNextPageList(@NonNull List list) {
+        LogUtils.d(TAG, "showNextPageList");
+        progressBar.setVisibility(View.GONE);
+        textView.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
+        contentInfoModelList.addAll(list);
+        adapter.notifyDataSetChanged();
+        isLoadingState = false;
+    }
+
+    @Override
     public void showEmpty() {
         LogUtils.d(TAG, "showEmpty");
+        progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         textView.setVisibility(View.VISIBLE);
     }
 
     @Override
+    public void showNextPageEmpty() {
+        LogUtils.d(TAG, "showNextPageEmpty");
+        progressBar.setVisibility(View.GONE);
+        showToast(R.string.toast_no_more_search_query);
+    }
+
+    @Override
     public void showError(String message) {
         LogUtils.d(TAG, "showError");
+        progressBar.setVisibility(View.GONE);
         showToast(message);
     }
+
+    private void searchNextPage() {
+        isLoadingState = true;
+        progressBar.setVisibility(View.VISIBLE);
+        presenter.startSearchingNextPage(searchQuery);
+    }
+
 }

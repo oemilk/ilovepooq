@@ -17,6 +17,7 @@
     <!-- toast -->
     <string name="toast_no_link_url">There is no link url.</string>
     <string name="toast_no_search_query">There is no search query.</string>
+    <string name="toast_no_more_search_query">There is no more search query.</string>
 
     <!-- pattern -->
     <string name="textview_mvc_text">MVC</string>

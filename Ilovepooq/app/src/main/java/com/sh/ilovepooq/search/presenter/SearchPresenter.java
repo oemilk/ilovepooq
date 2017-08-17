@@ -61,4 +61,31 @@ public class SearchPresenter implements SearchContract.Presenter {
         );
     }
 
+    @Override
+    public void startSearchingNextPage(@NonNull String query) {
+        disposable.add(
+                repository.searchNextPage(query)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribeWith(
+                                new DisposableSingleObserver<List<SearchImageModel.Document>>() {
+                                    @Override
+                                    public void onSuccess(
+                                            @NonNull List<SearchImageModel.Document> list) {
+                                        if (list.isEmpty()) {
+                                            view.showNextPageEmpty();
+                                        } else {
+                                            view.showNextPageList(list);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(@NonNull Throwable e) {
+                                        view.showError(e.getMessage());
+                                    }
+                                })
+        );
+
+    }
+
 }

@@ -17,6 +17,8 @@ public class Constants {
     public static final String API_BASE_URL = "https://dapi.kakao.com";
     public static final String API_SEARCH_IMAGE_URL = "/v2/search/image";
     public static final String API_SEARCH_IMAGE_QUERY = "query";
+    public static final String API_SEARCH_IMAGE_SIZE = "size";
+    public static final String API_SEARCH_IMAGE_PAGE = "page";
     public static final String API_KAKAO_KEY = "KakaoAK 5a120370e5ca4361a3ec414b219cb1c6";
     public static final String API_AUTHORIZATION = "Authorization";
 
