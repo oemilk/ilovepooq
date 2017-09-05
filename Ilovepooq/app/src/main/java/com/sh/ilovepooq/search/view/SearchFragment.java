@@ -6,14 +6,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -22,6 +25,7 @@ import com.sh.ilovepooq.base.App;
 import com.sh.ilovepooq.base.BaseFragment;
 import com.sh.ilovepooq.base.Constants;
 import com.sh.ilovepooq.model.SearchImageModel;
+import com.sh.ilovepooq.rx.RxSearch;
 import com.sh.ilovepooq.search.SearchContract;
 import com.sh.ilovepooq.utils.LogUtils;
 
@@ -55,9 +59,11 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     TextView textView;
 
     private SearchAdapter adapter;
+    private SearchAutoAdapter autoAdapter;
     private GridLayoutManager gridLayoutManager;
 
     private List<SearchImageModel.Document> contentInfoModelList = new ArrayList<>();
+    private List<SearchImageModel.Document> autoList = new ArrayList<>();
 
     private Unbinder unbinder;
 
@@ -162,6 +168,29 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search, menu);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id
+                .action_search));
+
+        autoAdapter = new SearchAutoAdapter<>(getContext(), R.layout.item_auto_search_list_row,
+                autoList);
+
+        SearchView.SearchAutoComplete autoComplete = searchView
+                .findViewById(android.support.v7.appcompat.R.id.search_src_text);
+        autoComplete.setAdapter(autoAdapter);
+        autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String link = autoList.get(position).getDocUrl();
+                if (link == null || link.isEmpty()) {
+                    showToast(R.string.toast_no_link_url);
+                } else {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                    startActivity(intent);
+                }
+            }
+        });
+
+        presenter.initRxSearch(new RxSearch(searchView));
     }
 
     @Override
@@ -193,6 +222,14 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         contentInfoModelList.addAll(list);
         adapter.notifyDataSetChanged();
         isLoadingState = false;
+    }
+
+    @Override
+    public void showAutoList(@NonNull List list) {
+        LogUtils.d(TAG, "showAutoList");
+        autoList.clear();
+        autoList.addAll(list);
+        autoAdapter.notifyDataSetChanged();
     }
 
     @Override

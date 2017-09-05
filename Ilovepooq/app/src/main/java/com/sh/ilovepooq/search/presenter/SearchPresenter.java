@@ -2,15 +2,20 @@ package com.sh.ilovepooq.search.presenter;
 
 import com.sh.ilovepooq.base.BaseContract;
 import com.sh.ilovepooq.model.SearchImageModel;
+import com.sh.ilovepooq.rx.RxSearch;
 import com.sh.ilovepooq.search.SearchContract;
+
+import org.reactivestreams.Publisher;
 
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Function;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subscribers.DisposableSubscriber;
 
 public class SearchPresenter implements SearchContract.Presenter {
 
@@ -86,6 +91,39 @@ public class SearchPresenter implements SearchContract.Presenter {
                                 })
         );
 
+    }
+
+    @Override
+    public void initRxSearch(RxSearch rxSearch) {
+        disposable.add(
+                rxSearch.getChange()
+                        .switchMap(new Function<String,
+                                Publisher<List<SearchImageModel.Document>>>() {
+                            @Override
+                            public Publisher<List<SearchImageModel.Document>> apply(
+                                    @NonNull String s) throws Exception {
+                                return repository.autoSearch(s);
+                            }
+                        })
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribeWith(new DisposableSubscriber<List<SearchImageModel.Document>>() {
+                            @Override
+                            public void onNext(List<SearchImageModel.Document> list) {
+                                view.showAutoList(list);
+                            }
+
+                            @Override
+                            public void onError(Throwable t) {
+                                view.showError(t.getMessage());
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                //
+                            }
+                        })
+        );
     }
 
 }

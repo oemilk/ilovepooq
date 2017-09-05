@@ -12,4 +12,11 @@ public class ImageUtils {
                 .into(imageView);
     }
 
+    public static void displayIamge(String imageUrl, ImageView imageView, int drawable) {
+        Glide.with(imageView.getContext())
+                .load(imageUrl)
+                .into(imageView)
+                .onLoadStarted(imageView.getContext().getDrawable(drawable));
+    }
+
 }

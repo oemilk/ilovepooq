@@ -6,6 +6,7 @@ import com.sh.ilovepooq.search.SearchContract;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
@@ -47,6 +48,19 @@ public class SearchRepository implements SearchContract.Repository {
                         return searchImageModel.getDocuments();
                     }
                 });
+    }
+
+    @Override
+    public Flowable<List<SearchImageModel.Document>> autoSearch(String query) {
+        return kakaoAPI.getSearchImages(query, FIRST_PAGE_NUMBER, LOAD_ITEM_COUNT)
+                .map(new Function<SearchImageModel, List<SearchImageModel.Document>>() {
+                    @Override
+                    public List<SearchImageModel.Document> apply(
+                            @NonNull SearchImageModel searchImageModel) throws Exception {
+                        return searchImageModel.getDocuments();
+                    }
+                })
+                .toFlowable();
     }
 
 }

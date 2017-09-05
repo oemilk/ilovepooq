@@ -4,9 +4,11 @@ import android.support.annotation.NonNull;
 
 import com.sh.ilovepooq.base.BaseContract;
 import com.sh.ilovepooq.model.SearchImageModel;
+import com.sh.ilovepooq.rx.RxSearch;
 
 import java.util.List;
 
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public interface SearchContract {
@@ -16,6 +18,8 @@ public interface SearchContract {
         void showList(@NonNull List<SearchImageModel.Document> list);
 
         void showNextPageList(@NonNull List<SearchImageModel.Document> list);
+
+        void showAutoList(@NonNull List<SearchImageModel.Document> list);
 
         void showEmpty();
 
@@ -31,6 +35,8 @@ public interface SearchContract {
 
         void startSearchingNextPage(@NonNull String query);
 
+        void initRxSearch(RxSearch rxSearch);
+
     }
 
     interface Repository extends BaseContract.Repository {
@@ -38,6 +44,8 @@ public interface SearchContract {
         Single<List<SearchImageModel.Document>> search(String query);
 
         Single<List<SearchImageModel.Document>> searchNextPage(String query);
+
+        Flowable<List<SearchImageModel.Document>> autoSearch(String query);
 
     }
 
