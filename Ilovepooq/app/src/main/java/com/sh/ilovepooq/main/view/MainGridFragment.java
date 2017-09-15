@@ -92,16 +92,13 @@ public class MainGridFragment extends BaseFragment implements MainGridContract.V
 
         gridLayoutManager = new GridLayoutManager(root.getContext(), PORTRAIT_SPAN_COUNT);
 
-        adapter = new MainGridAdapter(contentInfoModelList, new MainGridAdapter.ItemClick() {
-            @Override
-            public void startSearch(String searchQuery) {
-                if (searchQuery == null || searchQuery.isEmpty()) {
-                    showToast(R.string.toast_no_search_query);
-                } else {
-                    Intent intent = new Intent(getActivity(), SearchActivity.class);
-                    intent.putExtra(Constants.EXTRA_SEARCH_QUERY, searchQuery);
-                    startActivity(intent);
-                }
+        adapter = new MainGridAdapter(contentInfoModelList, searchQuery -> {
+            if (searchQuery == null || searchQuery.isEmpty()) {
+                showToast(R.string.toast_no_search_query);
+            } else {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra(Constants.EXTRA_SEARCH_QUERY, searchQuery);
+                startActivity(intent);
             }
         });
 

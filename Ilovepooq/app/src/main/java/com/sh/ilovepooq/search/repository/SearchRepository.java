@@ -8,8 +8,6 @@ import java.util.List;
 
 import io.reactivex.Flowable;
 import io.reactivex.Single;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
 
 public class SearchRepository implements SearchContract.Repository {
 
@@ -28,38 +26,20 @@ public class SearchRepository implements SearchContract.Repository {
     public Single<List<SearchImageModel.Document>> search(String query) {
         pageNumber = 1;
         return kakaoAPI.getSearchImages(query, FIRST_PAGE_NUMBER, LOAD_ITEM_COUNT)
-                .map(new Function<SearchImageModel, List<SearchImageModel.Document>>() {
-                    @Override
-                    public List<SearchImageModel.Document> apply(
-                            @NonNull SearchImageModel searchImageModel) throws Exception {
-                        return searchImageModel.getDocuments();
-                    }
-                });
+                .map(searchImageModel -> searchImageModel.getDocuments());
     }
 
     @Override
     public Single<List<SearchImageModel.Document>> searchNextPage(String query) {
         String page = Integer.toString(pageNumber++);
         return kakaoAPI.getSearchImages(query, page, LOAD_ITEM_COUNT)
-                .map(new Function<SearchImageModel, List<SearchImageModel.Document>>() {
-                    @Override
-                    public List<SearchImageModel.Document> apply(
-                            @NonNull SearchImageModel searchImageModel) throws Exception {
-                        return searchImageModel.getDocuments();
-                    }
-                });
+                .map(searchImageModel -> searchImageModel.getDocuments());
     }
 
     @Override
     public Flowable<List<SearchImageModel.Document>> autoSearch(String query) {
         return kakaoAPI.getSearchImages(query, FIRST_PAGE_NUMBER, LOAD_ITEM_COUNT)
-                .map(new Function<SearchImageModel, List<SearchImageModel.Document>>() {
-                    @Override
-                    public List<SearchImageModel.Document> apply(
-                            @NonNull SearchImageModel searchImageModel) throws Exception {
-                        return searchImageModel.getDocuments();
-                    }
-                })
+                .map(searchImageModel -> searchImageModel.getDocuments())
                 .toFlowable();
     }
 

@@ -6,7 +6,6 @@ import android.support.v7.widget.SearchView;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
-import io.reactivex.functions.Predicate;
 import io.reactivex.processors.BehaviorProcessor;
 
 public class RxSearch {
@@ -43,13 +42,7 @@ public class RxSearch {
         return changeProcessor
                 .throttleWithTimeout(CHANGE_TIMEOUT, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
-                .filter(new Predicate<String>() {
-                    @Override
-                    public boolean test(@io.reactivex.annotations.NonNull String s)
-                            throws Exception {
-                        return s.length() > SEARCH_MIN_LENGTH;
-                    }
-                });
+                .filter(s -> s.length() > SEARCH_MIN_LENGTH);
     }
 
 }

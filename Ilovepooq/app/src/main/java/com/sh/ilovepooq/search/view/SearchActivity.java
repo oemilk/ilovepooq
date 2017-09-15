@@ -26,7 +26,7 @@ public class SearchActivity extends BaseActivity {
 
         String searchQuery = getIntent().getStringExtra(Constants.EXTRA_SEARCH_QUERY);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(true);

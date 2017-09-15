@@ -57,12 +57,7 @@ class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
 
         holder.textViewTItle.setText(title);
         holder.textViewAlt.setText(alt);
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemClick.startBrowser(hyperlink);
-            }
-        });
+        holder.view.setOnClickListener(view -> itemClick.startBrowser(hyperlink));
 
         if (position > lastPosition) {
             Animation animation;

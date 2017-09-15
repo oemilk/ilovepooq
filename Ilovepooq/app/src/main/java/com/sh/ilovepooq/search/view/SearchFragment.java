@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -103,15 +102,12 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
 
         gridLayoutManager = new GridLayoutManager(root.getContext(), PORTRAIT_SPAN_COUNT);
 
-        adapter = new SearchAdapter(contentInfoModelList, new SearchAdapter.ItemClick() {
-            @Override
-            public void startBrowser(String link) {
-                if (link == null || link.isEmpty()) {
-                    showToast(R.string.toast_no_link_url);
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-                    startActivity(intent);
-                }
+        adapter = new SearchAdapter(contentInfoModelList, link -> {
+            if (link == null || link.isEmpty()) {
+                showToast(R.string.toast_no_link_url);
+            } else {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                startActivity(intent);
             }
         });
 
@@ -177,16 +173,13 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         SearchView.SearchAutoComplete autoComplete = searchView
                 .findViewById(android.support.v7.appcompat.R.id.search_src_text);
         autoComplete.setAdapter(autoAdapter);
-        autoComplete.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String link = autoList.get(position).getDocUrl();
-                if (link == null || link.isEmpty()) {
-                    showToast(R.string.toast_no_link_url);
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-                    startActivity(intent);
-                }
+        autoComplete.setOnItemClickListener((adapterView, view, position, l) -> {
+            String link = autoList.get(position).getDocUrl();
+            if (link == null || link.isEmpty()) {
+                showToast(R.string.toast_no_link_url);
+            } else {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                startActivity(intent);
             }
         });
 

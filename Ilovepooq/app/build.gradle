@@ -26,21 +26,22 @@ android {
     lintOptions {
         abortOnError false
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:26.0.2'
     compile 'com.android.support:design:26.0.2'
     compile 'com.android.support:cardview-v7:26.0.2'
     compile 'com.android.support:recyclerview-v7:26.0.2'
-
     // jsoup - HTML parser library @ https://jsoup.org/
     compile 'org.jsoup:jsoup:1.10.3'
-
     // glide - An image loading and caching library for Android @ https://github.com/bumptech/glide
     compile 'com.github.bumptech.glide:glide:4.0.0'
-
     // dagger - A fast dependency injector for Android and Java @ http://square.github.io/dagger/
     compile 'com.google.dagger:dagger:2.11-rc2'
     compile 'com.google.dagger:dagger-android:2.11-rc2'
@@ -48,34 +49,27 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.11-rc2'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11-rc2'
     provided 'javax.annotation:jsr250-api:1.0'
-
     // junit - A simple framework to write repeatable tests @ http://junit.org/junit4/
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.8.8'
-
     // RxJava - An API for asynchronous programming with observable streams @ http://reactivex.io/
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.1.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-
     // Butter knife - Find and automatically cast the corresponding view
     // @ http://jakewharton.github.io/butterknife/
     compile 'com.jakewharton:butterknife:8.6.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
-
     // Retrofit2 - A type-safe HTTP client for Android and Java
     // @ http://square.github.io/retrofit/
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-
     // OkHttp - An HTTP & HTTP/2 client for Android and Java applications
     // @ http://square.github.io/okhttp/
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     compile 'com.squareup.okhttp3:okhttp:3.8.0'
-
     // gson - A Java serialization/deserialization library to convert Java Objects into JSON and
     //        back
     // @ https://github.com/google/gson
     compile 'com.google.code.gson:gson:2.8.0'
-
 }

@@ -84,15 +84,12 @@ public class MainListFragment extends BaseFragment implements MainListContract.V
         View root = inflater.inflate(R.layout.fragment_main_list, container, false);
         unbinder = ButterKnife.bind(this, root);
 
-        adapter = new MainListAdapter(contentInfoModelList, new MainListAdapter.ItemClick() {
-            @Override
-            public void startBrowser(String link) {
-                if (link == null || link.isEmpty()) {
-                    showToast(R.string.toast_no_link_url);
-                } else {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-                    startActivity(intent);
-                }
+        adapter = new MainListAdapter(contentInfoModelList, link -> {
+            if (link == null || link.isEmpty()) {
+                showToast(R.string.toast_no_link_url);
+            } else {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+                startActivity(intent);
             }
         });
 

@@ -11,16 +11,13 @@ import org.mockito.Mockito;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Scheduler;
 import io.reactivex.Single;
 import io.reactivex.android.plugins.RxAndroidPlugins;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Function;
 import io.reactivex.internal.schedulers.ExecutorScheduler;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.subscribers.TestSubscriber;
@@ -59,45 +56,11 @@ public class MainGridPresenterTest {
             }
         };
 
-        RxJavaPlugins.setInitIoSchedulerHandler(new Function<Callable<Scheduler>, Scheduler>() {
-            @Override
-            public Scheduler apply(@NonNull Callable<Scheduler> schedulerCallable)
-                    throws Exception {
-                return immediate;
-            }
-        });
-        RxJavaPlugins
-                .setInitComputationSchedulerHandler(new Function<Callable<Scheduler>, Scheduler>() {
-                    @Override
-                    public Scheduler apply(@NonNull Callable<Scheduler> schedulerCallable)
-                            throws Exception {
-                        return immediate;
-                    }
-                });
-        RxJavaPlugins
-                .setInitNewThreadSchedulerHandler(new Function<Callable<Scheduler>, Scheduler>() {
-                    @Override
-                    public Scheduler apply(@NonNull Callable<Scheduler> schedulerCallable)
-                            throws Exception {
-                        return immediate;
-                    }
-                });
-        RxJavaPlugins
-                .setInitSingleSchedulerHandler(new Function<Callable<Scheduler>, Scheduler>() {
-                    @Override
-                    public Scheduler apply(@NonNull Callable<Scheduler> schedulerCallable)
-                            throws Exception {
-                        return immediate;
-                    }
-                });
-        RxAndroidPlugins
-                .setInitMainThreadSchedulerHandler(new Function<Callable<Scheduler>, Scheduler>() {
-                    @Override
-                    public Scheduler apply(@NonNull Callable<Scheduler> schedulerCallable)
-                            throws Exception {
-                        return immediate;
-                    }
-                });
+        RxJavaPlugins.setInitIoSchedulerHandler(schedulerCallable -> immediate);
+        RxJavaPlugins.setInitComputationSchedulerHandler(schedulerCallable -> immediate);
+        RxJavaPlugins.setInitNewThreadSchedulerHandler(schedulerCallable -> immediate);
+        RxJavaPlugins.setInitSingleSchedulerHandler(schedulerCallable -> immediate);
+        RxAndroidPlugins.setInitMainThreadSchedulerHandler(schedulerCallable -> immediate);
     }
 
     @Test

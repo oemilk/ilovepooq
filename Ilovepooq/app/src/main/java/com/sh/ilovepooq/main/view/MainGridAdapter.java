@@ -55,12 +55,7 @@ class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.ViewHolder> {
 
         holder.textViewTItle.setText(title);
         holder.textViewAlt.setText(alt);
-        holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                itemClick.startSearch(title);
-            }
-        });
+        holder.view.setOnClickListener(view -> itemClick.startSearch(title));
 
         if (position > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(
