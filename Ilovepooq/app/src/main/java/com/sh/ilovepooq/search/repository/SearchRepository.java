@@ -38,9 +38,8 @@ public class SearchRepository implements SearchContract.Repository {
 
     @Override
     public Flowable<List<SearchImageModel.Document>> autoSearch(String query) {
-        return kakaoAPI.getSearchImages(query, FIRST_PAGE_NUMBER, LOAD_ITEM_COUNT)
-                .map(searchImageModel -> searchImageModel.getDocuments())
-                .toFlowable();
+        return kakaoAPI.getAutoSearchImages(query, FIRST_PAGE_NUMBER, LOAD_ITEM_COUNT)
+                .concatMap(searchImageModel -> Flowable.just(searchImageModel.getDocuments()));
     }
 
 }

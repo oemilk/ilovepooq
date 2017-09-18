@@ -4,8 +4,6 @@ import com.sh.ilovepooq.BuildConfig;
 import com.sh.ilovepooq.base.Constants;
 import com.sh.ilovepooq.remote.KakaoAPI;
 
-import java.util.concurrent.TimeUnit;
-
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -19,9 +17,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class KakaoAPIModule {
-
-    private static final int HTTP_READ_TIMEOUT = 10000;
-    private static final int HTTP_CONNECT_TIMEOUT = 6000;
 
     @Provides
     @Singleton
@@ -37,8 +32,6 @@ public class KakaoAPIModule {
                     .addHeader(Constants.API_AUTHORIZATION, Constants.API_KAKAO_KEY)
                     .build());
         })
-                .connectTimeout(HTTP_READ_TIMEOUT, TimeUnit.SECONDS)
-                .readTimeout(HTTP_CONNECT_TIMEOUT, TimeUnit.SECONDS)
                 .addInterceptor(interceptor)
                 .build();
     }
