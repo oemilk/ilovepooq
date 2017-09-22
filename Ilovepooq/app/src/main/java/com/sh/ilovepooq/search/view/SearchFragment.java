@@ -102,6 +102,8 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
 
         gridLayoutManager = new GridLayoutManager(root.getContext(), PORTRAIT_SPAN_COUNT);
 
+        setGridLayoutManagerSpanCount(getResources().getConfiguration().orientation);
+
         adapter = new SearchAdapter(contentInfoModelList, link -> {
             if (link == null || link.isEmpty()) {
                 showToast(R.string.toast_no_link_url);
@@ -163,6 +165,8 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
         inflater.inflate(R.menu.menu_search, menu);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id
                 .action_search));
@@ -189,11 +193,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            gridLayoutManager.setSpanCount(LANDSCAPE_SPAN_COUNT);
-        } else {
-            gridLayoutManager.setSpanCount(PORTRAIT_SPAN_COUNT);
-        }
+        setGridLayoutManagerSpanCount(newConfig.orientation);
     }
 
     @Override
@@ -245,6 +245,14 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         LogUtils.d(TAG, "showError");
         progressBar.setVisibility(View.GONE);
         showToast(message);
+    }
+
+    private void setGridLayoutManagerSpanCount(int orientation) {
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            gridLayoutManager.setSpanCount(LANDSCAPE_SPAN_COUNT);
+        } else {
+            gridLayoutManager.setSpanCount(PORTRAIT_SPAN_COUNT);
+        }
     }
 
     private void searchNextPage() {

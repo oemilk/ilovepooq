@@ -34,8 +34,10 @@ public class SearchActivity extends BaseActivity {
         }
 
         fragmentManager = getSupportFragmentManager();
-        ActivityUtils.addFragment(fragmentManager, SearchFragment.newInstance(searchQuery),
-                R.id.contentFrame, SEARCH_TAG);
+        if (!ActivityUtils.hasFragment(fragmentManager, SEARCH_TAG)) {
+            ActivityUtils.addFragment(fragmentManager, SearchFragment.newInstance(searchQuery),
+                    R.id.contentFrame, SEARCH_TAG);
+        }
     }
 
 }

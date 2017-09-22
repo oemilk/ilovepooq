@@ -92,6 +92,8 @@ public class MainGridFragment extends BaseFragment implements MainGridContract.V
 
         gridLayoutManager = new GridLayoutManager(root.getContext(), PORTRAIT_SPAN_COUNT);
 
+        setGridLayoutManagerSpanCount(getResources().getConfiguration().orientation);
+
         adapter = new MainGridAdapter(contentInfoModelList, searchQuery -> {
             if (searchQuery == null || searchQuery.isEmpty()) {
                 showToast(R.string.toast_no_search_query);
@@ -144,6 +146,8 @@ public class MainGridFragment extends BaseFragment implements MainGridContract.V
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menu.clear();
         inflater.inflate(R.menu.menu_main, menu);
     }
 
@@ -161,11 +165,7 @@ public class MainGridFragment extends BaseFragment implements MainGridContract.V
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            gridLayoutManager.setSpanCount(LANDSCAPE_SPAN_COUNT);
-        } else {
-            gridLayoutManager.setSpanCount(PORTRAIT_SPAN_COUNT);
-        }
+        setGridLayoutManagerSpanCount(newConfig.orientation);
     }
 
     @Override
@@ -188,6 +188,14 @@ public class MainGridFragment extends BaseFragment implements MainGridContract.V
     public void showError(String message) {
         LogUtils.d(TAG, "showError");
         showToast(message);
+    }
+
+    private void setGridLayoutManagerSpanCount(int orientation) {
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            gridLayoutManager.setSpanCount(LANDSCAPE_SPAN_COUNT);
+        } else {
+            gridLayoutManager.setSpanCount(PORTRAIT_SPAN_COUNT);
+        }
     }
 
     interface Callback {

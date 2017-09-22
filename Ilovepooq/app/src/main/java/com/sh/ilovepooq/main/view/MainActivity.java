@@ -25,15 +25,18 @@ public class MainActivity extends BaseActivity implements MainGridFragment.Callb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
 
         fragmentManager = getSupportFragmentManager();
-        ActivityUtils.addFragment(fragmentManager, MainGridFragment.newInstance(),
-                R.id.contentFrame, MAIN_GRID_TAG);
+        if (!ActivityUtils.hasFragment(fragmentManager, MAIN_GRID_TAG)
+                && !ActivityUtils.hasFragment(fragmentManager, MAIN_LIST_TAG)) {
+            ActivityUtils.addFragment(fragmentManager, MainGridFragment.newInstance(),
+                    R.id.contentFrame, MAIN_GRID_TAG);
+        }
     }
 
     @Override
