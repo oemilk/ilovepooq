@@ -1,5 +1,6 @@
 package com.sh.ilovepooq.main.view;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -37,6 +38,8 @@ public class MainActivity extends BaseActivity implements MainGridFragment.Callb
             ActivityUtils.addFragment(fragmentManager, MainGridFragment.newInstance(),
                     R.id.contentFrame, MAIN_GRID_TAG);
         }
+
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
     }
 
     @Override
