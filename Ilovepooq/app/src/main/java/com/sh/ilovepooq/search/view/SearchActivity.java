@@ -1,14 +1,21 @@
 package com.sh.ilovepooq.search.view;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 
 import com.sh.ilovepooq.R;
 import com.sh.ilovepooq.base.BaseActivity;
 import com.sh.ilovepooq.base.Constants;
 import com.sh.ilovepooq.utils.ActivityUtils;
+import com.sh.ilovepooq.utils.ImageUtils;
 import com.sh.ilovepooq.utils.LogUtils;
 
 public class SearchActivity extends BaseActivity {
@@ -24,7 +31,9 @@ public class SearchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        String searchQuery = getIntent().getStringExtra(Constants.EXTRA_SEARCH_QUERY);
+        Intent intent = getIntent();
+        String searchQuery = intent.getStringExtra(Constants.EXTRA_SEARCH_QUERY);
+        String imageURL = intent.getStringExtra(Constants.EXTRA_IMAGE_URL);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -38,6 +47,27 @@ public class SearchActivity extends BaseActivity {
             ActivityUtils.addFragment(fragmentManager, SearchFragment.newInstance(searchQuery),
                     R.id.contentFrame, SEARCH_TAG);
         }
+
+        setToolbarLayout(imageURL);
+
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
+    }
+
+    private void setToolbarLayout(String imageURL) {
+        ImageView imageView = findViewById(R.id.imageView);
+        ImageUtils.displayIamgeWithPalette(imageURL, imageView);
+
+        CollapsingToolbarLayout layout = findViewById(R.id.collapsing_toolbar_layout);
+        layout.setExpandedTitleColor(Color.TRANSPARENT);
+        ViewCompat.getTransitionName(imageView);
+        AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
+        appBarLayout.addOnOffsetChangedListener((barLayout, verticalOffset) -> {
+            if(layout.getHeight() + verticalOffset < 2 * ViewCompat.getMinimumHeight(layout)) {
+                imageView.setTransitionName("");
+            } else {
+                imageView.setTransitionName(getString(R.string.transition_grid));
+            }
+        });
     }
 
 }

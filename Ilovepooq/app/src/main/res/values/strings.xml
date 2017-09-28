@@ -22,4 +22,7 @@
     <!-- action -->
     <string name="action_search">Search</string>
 
+    <!-- transitionName -->
+    <string name="transition_grid">transitionGrid</string>
+
 </resources>

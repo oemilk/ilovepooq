@@ -1,11 +1,13 @@
 package com.sh.ilovepooq.main.view;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -94,13 +96,19 @@ public class MainGridFragment extends BaseFragment implements MainGridContract.V
 
         setGridLayoutManagerSpanCount(getResources().getConfiguration().orientation);
 
-        adapter = new MainGridAdapter(contentInfoModelList, searchQuery -> {
+        adapter = new MainGridAdapter(contentInfoModelList, (imageView, searchQuery, imageURL) -> {
             if (searchQuery == null || searchQuery.isEmpty()) {
                 showToast(R.string.toast_no_search_query);
             } else {
                 Intent intent = new Intent(getActivity(), SearchActivity.class);
                 intent.putExtra(Constants.EXTRA_SEARCH_QUERY, searchQuery);
-                startActivity(intent);
+                intent.putExtra(Constants.EXTRA_IMAGE_URL, imageURL);
+
+                ActivityOptions options = ActivityOptions
+                        .makeSceneTransitionAnimation(getActivity(), imageView,
+                                ViewCompat.getTransitionName(imageView));
+
+                startActivity(intent, options.toBundle());
             }
         });
 

@@ -40,7 +40,7 @@ class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_grid_row, parent, false);
+                .inflate(R.layout.item_main_grid_row, parent, false);
         return new ViewHolder(view);
     }
 
@@ -55,7 +55,8 @@ class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.ViewHolder> {
 
         holder.textViewTItle.setText(title);
         holder.textViewAlt.setText(alt);
-        holder.view.setOnClickListener(view -> itemClick.startSearch(title));
+        holder.view.setOnClickListener(view ->
+                itemClick.startSearch(holder.imageView, title, imageURL));
 
         if (position > lastPosition) {
             Animation animation = AnimationUtils.loadAnimation(
@@ -66,7 +67,7 @@ class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.ViewHolder> {
     }
 
     interface ItemClick {
-        void startSearch(String searchQuery);
+        void startSearch(ImageView imageView, String searchQuery, String imageURL);
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

@@ -24,6 +24,7 @@ public class Constants {
 
     // SearchActivity
     public static final String EXTRA_SEARCH_QUERY = "EXTRA_SEARCH_QUERY";
+    public static final String EXTRA_IMAGE_URL = "EXTRA_IMAGE_URL";
     public static final String ARGUMENT_SEARCH_QUERY = "ARGUMENT_SEARCH_QUERY";
 
 }
