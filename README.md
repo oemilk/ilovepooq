@@ -4,14 +4,14 @@ ilovepooq
 
 This is a project for 1st code review interview.
 
-![alt tag](https://github.com/oemilk/images/blob/master/ilovepooq_screenshot_01.png)
-![alt tag](https://github.com/oemilk/images/blob/master/ilovepooq_screenshot_02.png)
+![alt tag](https://github.com/oemilk/images/blob/master/ilovepooq_screenshot_01.gif)
+![alt tag](https://github.com/oemilk/images/blob/master/ilovepooq_screenshot_02.gif)
 
 ## Requirements
 
 - JDK 1.8
 - [Android SDK](http://developer.android.com/sdk/index.html)
-- Target SDK version : Android M [(API 25) ](http://developer.android.com/tools/revisions/platforms.html)
+- Target SDK version : Android O [(API 26) ](http://developer.android.com/tools/revisions/platforms.html)
 - Minimun SDK version : Android L [(API 21)](http://developer.android.com/tools/revisions/platforms.html)
 - Latest Android SDK Tools and build tools.
 
