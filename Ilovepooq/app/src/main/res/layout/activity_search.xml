@@ -21,8 +21,9 @@
             app:contentScrim="?android:attr/colorPrimary"
             app:expandedTitleMarginEnd="64dp"
             app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:statusBarScrim="@android:color/transparent">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            app:statusBarScrim="@android:color/transparent"
+            app:titleEnabled="false">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -41,6 +42,20 @@
                 app:layout_collapseMode="pin"
                 app:titleTextColor="@android:color/white"/>
 
+            <com.lapism.searchview.SearchView
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="false"
+                android:visibility="gone"
+                app:layout_behavior="com.lapism.searchview.SearchBehavior"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.95"
+                app:search_navigation_icon="0"
+                app:search_version="menu_item"
+                app:search_version_margins="menu_item"
+                app:search_voice="false"/>
+
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
@@ -49,7 +64,6 @@
         android:id="@+id/contentFrame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/appBarLayout"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
 </android.support.design.widget.CoordinatorLayout>

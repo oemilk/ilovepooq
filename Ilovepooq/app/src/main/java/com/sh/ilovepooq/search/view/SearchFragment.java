@@ -6,14 +6,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
@@ -57,12 +56,12 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     @BindView(R.id.text_empty)
     TextView textView;
 
+    private com.lapism.searchview.SearchView searchView;
+
     private SearchAdapter adapter;
-    private SearchAutoAdapter autoAdapter;
     private GridLayoutManager gridLayoutManager;
 
     private List<SearchImageModel.Document> contentInfoModelList = new ArrayList<>();
-    private List<SearchImageModel.Document> autoList = new ArrayList<>();
 
     private Unbinder unbinder;
 
@@ -132,6 +131,9 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
             }
         });
 
+        searchView = getActivity().findViewById(R.id.searchView);
+        searchView.setHint(android.R.string.search_go);
+
         return root;
     }
 
@@ -168,22 +170,25 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         super.onCreateOptionsMenu(menu, inflater);
         menu.clear();
         inflater.inflate(R.menu.menu_search, menu);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id
-                .action_search));
 
-        autoAdapter = new SearchAutoAdapter<>(getContext(), R.layout.item_auto_search_list_row,
-                autoList);
+        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+        searchMenuItem.setOnActionExpandListener(new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem menuItem) {
+                menuItem.collapseActionView();
+                if (searchView.getVisibility() == View.VISIBLE) {
+                    searchView.setVisibility(View.GONE);
+                    searchView.close(true);
+                } else {
+                    searchView.setVisibility(View.VISIBLE);
+                    searchView.open(true);
+                }
+                return false;
+            }
 
-        SearchView.SearchAutoComplete autoComplete = searchView
-                .findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        autoComplete.setAdapter(autoAdapter);
-        autoComplete.setOnItemClickListener((adapterView, view, position, l) -> {
-            String link = autoList.get(position).getDocUrl();
-            if (link == null || link.isEmpty()) {
-                showToast(R.string.toast_no_link_url);
-            } else {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
-                startActivity(intent);
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+                return false;
             }
         });
 
@@ -220,9 +225,6 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     @Override
     public void showAutoList(@NonNull List list) {
         LogUtils.d(TAG, "showAutoList");
-        autoList.clear();
-        autoList.addAll(list);
-        autoAdapter.notifyDataSetChanged();
     }
 
     @Override

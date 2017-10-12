@@ -82,4 +82,9 @@ dependencies {
     //        back
     // @ https://github.com/google/gson
     compile 'com.google.code.gson:gson:2.8.0'
+
+    // searchview - Persistent SearchView Library from Play Store.
+    // @ https://github.com/lapism/SearchView
+    implementation 'com.lapism:searchview:5.0.0-alpha7'
+    implementation 'com.google.android:flexbox:0.3.1'
 }

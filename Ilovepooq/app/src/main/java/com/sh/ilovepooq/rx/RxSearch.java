@@ -1,7 +1,8 @@
 package com.sh.ilovepooq.rx;
 
 import android.support.annotation.NonNull;
-import android.support.v7.widget.SearchView;
+
+import com.lapism.searchview.SearchView;
 
 import java.util.concurrent.TimeUnit;
 

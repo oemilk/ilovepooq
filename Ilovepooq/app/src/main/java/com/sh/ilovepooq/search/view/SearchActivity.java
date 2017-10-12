@@ -62,7 +62,7 @@ public class SearchActivity extends BaseActivity {
         ViewCompat.getTransitionName(imageView);
         AppBarLayout appBarLayout = findViewById(R.id.appBarLayout);
         appBarLayout.addOnOffsetChangedListener((barLayout, verticalOffset) -> {
-            if(layout.getHeight() + verticalOffset < 2 * ViewCompat.getMinimumHeight(layout)) {
+            if (layout.getHeight() + verticalOffset < 2 * ViewCompat.getMinimumHeight(layout)) {
                 imageView.setTransitionName("");
             } else {
                 imageView.setTransitionName(getString(R.string.transition_grid));
