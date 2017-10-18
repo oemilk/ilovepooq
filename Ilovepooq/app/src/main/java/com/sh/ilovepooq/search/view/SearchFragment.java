@@ -35,6 +35,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.subscribers.DisposableSubscriber;
 
 public class SearchFragment extends BaseFragment implements SearchContract.View {
 
@@ -192,7 +193,25 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
             }
         });
 
-        presenter.initRxSearch(new RxSearch(searchView));
+        RxSearch rxSearch = new RxSearch(searchView);
+        rxSearch.getSubmit().subscribeWith(new DisposableSubscriber<String>() {
+            @Override
+            public void onNext(String s) {
+                searchQuery = s;
+
+            }
+
+            @Override
+            public void onError(Throwable t) {
+
+            }
+
+            @Override
+            public void onComplete() {
+
+            }
+        });
+        presenter.initRxSearch(rxSearch);
     }
 
     @Override
@@ -207,6 +226,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         progressBar.setVisibility(View.GONE);
         textView.setVisibility(View.GONE);
         recyclerView.setVisibility(View.VISIBLE);
+        contentInfoModelList.clear();
         contentInfoModelList.addAll(list);
         adapter.notifyDataSetChanged();
     }
@@ -233,6 +253,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         progressBar.setVisibility(View.GONE);
         recyclerView.setVisibility(View.GONE);
         textView.setVisibility(View.VISIBLE);
+        contentInfoModelList.clear();
     }
 
     @Override

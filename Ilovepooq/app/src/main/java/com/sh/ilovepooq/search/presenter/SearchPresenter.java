@@ -92,7 +92,7 @@ public class SearchPresenter implements SearchContract.Presenter {
 
     @Override
     public void initRxSearch(RxSearch rxSearch) {
-        disposable.add(
+        disposable.addAll(
                 rxSearch.getChange()
                         .switchMap(s -> repository.autoSearch(s))
                         .observeOn(AndroidSchedulers.mainThread())
@@ -112,7 +112,36 @@ public class SearchPresenter implements SearchContract.Presenter {
                             public void onComplete() {
                                 //
                             }
+                        }),
+
+                rxSearch.getSubmit()
+                        .switchMap(s -> repository.search(s)
+                                .toFlowable()
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribeOn(Schedulers.io()))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribeWith(new DisposableSubscriber<List<SearchImageModel.Document>>() {
+                            @Override
+                            public void onNext(List<SearchImageModel.Document> list) {
+                                if (list.isEmpty()) {
+                                    view.showEmpty();
+                                } else {
+                                    view.showList(list);
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable t) {
+                                view.showError(t.getMessage());
+                            }
+
+                            @Override
+                            public void onComplete() {
+                                //
+                            }
                         })
+
         );
     }
 

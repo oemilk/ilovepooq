@@ -50,7 +50,7 @@
                 android:visibility="gone"
                 app:layout_behavior="com.lapism.searchview.SearchBehavior"
                 app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.95"
+                app:layout_collapseParallaxMultiplier="0.99"
                 app:search_navigation_icon="0"
                 app:search_version="menu_item"
                 app:search_version_margins="menu_item"
