@@ -1,14 +1,17 @@
 package com.sh.ilovepooq.search.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.lapism.searchview.SearchView;
 import com.sh.ilovepooq.R;
 import com.sh.ilovepooq.base.App;
 import com.sh.ilovepooq.base.BaseFragment;
@@ -57,7 +61,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     @BindView(R.id.text_empty)
     TextView textView;
 
-    private com.lapism.searchview.SearchView searchView;
+    private SearchView searchView;
 
     private SearchAdapter adapter;
     private GridLayoutManager gridLayoutManager;
@@ -198,7 +202,6 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
             @Override
             public void onNext(String s) {
                 searchQuery = s;
-
             }
 
             @Override
@@ -218,6 +221,21 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setGridLayoutManagerSpanCount(newConfig.orientation);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SearchView.SPEECH_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            if (results != null && results.size() > 0) {
+                String searchWrd = results.get(0);
+                if (!TextUtils.isEmpty(searchWrd)) {
+                    searchView.setQuery(searchWrd, true);
+                }
+            }
+            return;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

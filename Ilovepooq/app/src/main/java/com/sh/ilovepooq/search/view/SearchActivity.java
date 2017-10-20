@@ -25,6 +25,7 @@ public class SearchActivity extends BaseActivity {
     private static final String SEARCH_TAG = "SEARCH_TAG";
 
     private FragmentManager fragmentManager;
+    private SearchFragment searchFragment;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,14 +44,20 @@ public class SearchActivity extends BaseActivity {
         }
 
         fragmentManager = getSupportFragmentManager();
+        searchFragment = SearchFragment.newInstance(searchQuery);
         if (!ActivityUtils.hasFragment(fragmentManager, SEARCH_TAG)) {
-            ActivityUtils.addFragment(fragmentManager, SearchFragment.newInstance(searchQuery),
+            ActivityUtils.addFragment(fragmentManager, searchFragment,
                     R.id.contentFrame, SEARCH_TAG);
         }
 
         setToolbarLayout(imageURL);
 
         getWindow().setStatusBarColor(Color.TRANSPARENT);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        searchFragment.onActivityResult(requestCode, resultCode, data);
     }
 
     private void setToolbarLayout(String imageURL) {

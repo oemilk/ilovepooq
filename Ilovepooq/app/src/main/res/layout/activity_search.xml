@@ -53,8 +53,7 @@
                 app:layout_collapseParallaxMultiplier="0.99"
                 app:search_navigation_icon="0"
                 app:search_version="menu_item"
-                app:search_version_margins="menu_item"
-                app:search_voice="false"/>
+                app:search_version_margins="menu_item"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
