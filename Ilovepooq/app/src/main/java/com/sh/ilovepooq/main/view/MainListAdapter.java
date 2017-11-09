@@ -1,5 +1,7 @@
 package com.sh.ilovepooq.main.view;
 
+import android.databinding.BindingAdapter;
+import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sh.ilovepooq.R;
+import com.sh.ilovepooq.databinding.ItemListRowBinding;
 import com.sh.ilovepooq.model.ContentInfoModel;
 import com.sh.ilovepooq.utils.ImageUtils;
 
@@ -20,7 +23,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
+
+public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
 
     private List<ContentInfoModel> list;
 
@@ -47,18 +51,6 @@ class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final ContentInfoModel model = list.get(holder.getAdapterPosition());
-        final String imageURL = model.getImageURL();
-        final String alt = model.getAlt();
-        final String title = model.getTitle();
-        final String hyperlink = model.getHyperlink();
-
-        ImageUtils.displayIamge(imageURL, holder.imageView);
-
-        holder.textViewTItle.setText(title);
-        holder.textViewAlt.setText(alt);
-        holder.view.setOnClickListener(view -> itemClick.startBrowser(hyperlink));
-
         if (position > lastPosition) {
             Animation animation;
             if (position % 2 == 0) {
@@ -71,6 +63,19 @@ class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
             holder.cardView.startAnimation(animation);
             lastPosition = position;
         }
+
+        ContentInfoModel model = list.get(holder.getAdapterPosition());
+        holder.binding.setContent(model);
+        holder.binding.setAdapter(this);
+    }
+
+    public void startBrowser(String hyperlink) {
+        itemClick.startBrowser(hyperlink);
+    }
+
+    @BindingAdapter({"bind:imageUrl"})
+    public static void loadImage(ImageView view, String url) {
+        ImageUtils.displayIamge(url, view);
     }
 
     interface ItemClick {
@@ -79,6 +84,7 @@ class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
+        private final ItemListRowBinding binding;
         private final View view;
 
         @BindView(R.id.cardView)
@@ -96,6 +102,7 @@ class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
         ViewHolder(View view) {
             super(view);
 
+            binding = DataBindingUtil.bind(view);
             this.view = view;
             ButterKnife.bind(this, view);
         }

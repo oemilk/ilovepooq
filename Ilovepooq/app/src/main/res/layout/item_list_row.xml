@@ -1,48 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/list_row_item_height"
-    android:background="?android:attr/selectableItemBackground"
-    android:gravity="center_vertical">
+    <data>
+        <variable name="content" type="com.sh.ilovepooq.model.ContentInfoModel"/>
+        <variable name="adapter" type="com.sh.ilovepooq.main.view.MainListAdapter"/>
+    </data>
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/cardView"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        card_view:cardCornerRadius="@dimen/card_corner_radius">
+        android:layout_height="@dimen/list_row_item_height"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/list_row_item_image_width"
-            android:layout_height="@dimen/list_row_item_image_height"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/list_row_item_image_padding" />
+        <android.support.v7.widget.CardView
+            xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/cardView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:onClick="@{() -> adapter.startBrowser(content.hyperlink)}"
+            card_view:cardCornerRadius="@dimen/card_corner_radius">
 
-        <TextView
-            android:id="@+id/textView_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:ellipsize="end"
-            android:paddingLeft="@dimen/list_row_item_text_left_padding"
-            android:paddingRight="@dimen/list_row_item_text_padding"
-            android:paddingTop="@dimen/list_row_item_text_padding"
-            android:singleLine="true"
-            android:textSize="@dimen/list_row_item_title_text_size" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/list_row_item_image_width"
+                android:layout_height="@dimen/list_row_item_image_height"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/list_row_item_image_padding"
+                app:imageUrl="@{content.imageURL}"/>
 
-        <TextView
-            android:id="@+id/textView_alt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:ellipsize="end"
-            android:paddingBottom="@dimen/list_row_item_text_padding"
-            android:paddingLeft="@dimen/list_row_item_text_left_padding"
-            android:paddingRight="@dimen/list_row_item_text_padding"
-            android:singleLine="true"
-            android:textSize="@dimen/list_row_item_alt_text_size" />
+            <TextView
+                android:id="@+id/textView_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:ellipsize="end"
+                android:paddingLeft="@dimen/list_row_item_text_left_padding"
+                android:paddingRight="@dimen/list_row_item_text_padding"
+                android:paddingTop="@dimen/list_row_item_text_padding"
+                android:singleLine="true"
+                android:text="@{content.title}"
+                android:textSize="@dimen/list_row_item_title_text_size"/>
 
-    </android.support.v7.widget.CardView>
-</FrameLayout>
+            <TextView
+                android:id="@+id/textView_alt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:ellipsize="end"
+                android:paddingBottom="@dimen/list_row_item_text_padding"
+                android:paddingLeft="@dimen/list_row_item_text_left_padding"
+                android:paddingRight="@dimen/list_row_item_text_padding"
+                android:singleLine="true"
+                android:text="@{content.alt}"
+                android:textSize="@dimen/list_row_item_alt_text_size"/>
+
+        </android.support.v7.widget.CardView>
+
+    </FrameLayout>
+
+</layout>
