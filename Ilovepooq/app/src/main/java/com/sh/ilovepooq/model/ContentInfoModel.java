@@ -1,6 +1,11 @@
 package com.sh.ilovepooq.model;
 
-public class ContentInfoModel {
+import android.databinding.BaseObservable;
+import android.databinding.Bindable;
+
+import com.sh.ilovepooq.BR;
+
+public class ContentInfoModel extends BaseObservable {
 
     private String imageURL;
     private String alt;
@@ -14,36 +19,44 @@ public class ContentInfoModel {
         this.hyperlink = hyperlink;
     }
 
+    @Bindable
     public String getImageURL() {
         return imageURL;
     }
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+        notifyPropertyChanged(BR.imageURL);
     }
 
+    @Bindable
     public String getAlt() {
         return alt;
     }
 
     public void setAlt(String alt) {
         this.alt = alt;
+        notifyPropertyChanged(BR.alt);
     }
 
+    @Bindable
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+        notifyPropertyChanged(BR.title);
     }
 
+    @Bindable
     public String getHyperlink() {
         return hyperlink;
     }
 
     public void setHyperlink(String hyperlink) {
         this.hyperlink = hyperlink;
+        notifyPropertyChanged(BR.hyperlink);
     }
 
 }
