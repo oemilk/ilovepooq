@@ -1,9 +1,9 @@
 package com.sh.ilovepooq.main.view;
 
+import android.content.Context;
 import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.sh.ilovepooq.R;
 import com.sh.ilovepooq.databinding.ItemListRowBinding;
@@ -19,10 +18,6 @@ import com.sh.ilovepooq.model.ContentInfoModel;
 import com.sh.ilovepooq.utils.ImageUtils;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 
 public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolder> {
 
@@ -53,14 +48,10 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (position > lastPosition) {
             Animation animation;
-            if (position % 2 == 0) {
-                animation = AnimationUtils.loadAnimation(
-                        holder.imageView.getContext(), R.anim.up_from_bottom_list);
-            } else {
-                animation = AnimationUtils.loadAnimation(
-                        holder.imageView.getContext(), R.anim.up_from_bottom_list_reverse);
-            }
-            holder.cardView.startAnimation(animation);
+            Context context = holder.binding.cardView.getContext();
+            animation = AnimationUtils.loadAnimation(context, position % 2 == 0 ?
+                    R.anim.up_from_bottom_list : R.anim.up_from_bottom_list_reverse);
+            holder.binding.cardView.startAnimation(animation);
             lastPosition = position;
         }
 
@@ -85,26 +76,11 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
     static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final ItemListRowBinding binding;
-        private final View view;
-
-        @BindView(R.id.cardView)
-        CardView cardView;
-
-        @BindView(R.id.textView_title)
-        TextView textViewTItle;
-
-        @BindView(R.id.textView_alt)
-        TextView textViewAlt;
-
-        @BindView(R.id.imageView)
-        ImageView imageView;
 
         ViewHolder(View view) {
             super(view);
 
             binding = DataBindingUtil.bind(view);
-            this.view = view;
-            ButterKnife.bind(this, view);
         }
 
     }
