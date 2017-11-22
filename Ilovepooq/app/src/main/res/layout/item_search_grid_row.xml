@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="200dp"
              android:padding="@dimen/grid_row_item_padding">
@@ -16,7 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/white"
-            android:paddingBottom="@dimen/grid_row_item_text_height"/>
+            android:paddingBottom="@dimen/grid_row_item_text_height"
+            tools:ignore="contentDescription"
+            tools:src="@drawable/item_no_image"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -36,7 +38,8 @@
                 android:paddingRight="@dimen/grid_row_item_text_padding"
                 android:paddingTop="@dimen/grid_row_item_text_padding"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/grid_row_item_title_text_size"/>
+                android:textSize="@dimen/grid_row_item_title_text_size"
+                tools:text="@tools:sample/lorem"/>
 
             <TextView
                 android:id="@+id/textView_alt"
@@ -50,7 +53,8 @@
                 android:paddingLeft="@dimen/grid_row_item_text_padding"
                 android:paddingRight="@dimen/grid_row_item_text_padding"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/grid_row_item_alt_text_size"/>
+                android:textSize="@dimen/grid_row_item_alt_text_size"
+                tools:text="@tools:sample/lorem"/>
 
         </FrameLayout>
 

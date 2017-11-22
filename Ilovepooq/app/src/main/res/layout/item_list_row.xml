@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable name="content" type="com.sh.ilovepooq.model.ContentInfoModel"/>
@@ -27,8 +28,10 @@
                 android:layout_width="@dimen/list_row_item_image_width"
                 android:layout_height="@dimen/list_row_item_image_height"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/list_row_item_image_padding"
-                app:imageUrl="@{content.imageURL}"/>
+                android:layout_marginStart="@dimen/list_row_item_image_padding"
+                app:imageUrl="@{content.imageURL}"
+                tools:ignore="contentDescription"
+                tools:src="@drawable/item_no_image"/>
 
             <TextView
                 android:id="@+id/textView_title"
@@ -36,12 +39,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:ellipsize="end"
-                android:paddingLeft="@dimen/list_row_item_text_left_padding"
-                android:paddingRight="@dimen/list_row_item_text_padding"
+                android:paddingStart="@dimen/list_row_item_text_left_padding"
+                android:paddingEnd="@dimen/list_row_item_text_padding"
                 android:paddingTop="@dimen/list_row_item_text_padding"
                 android:singleLine="true"
                 android:text="@{content.title}"
-                android:textSize="@dimen/list_row_item_title_text_size"/>
+                android:textSize="@dimen/list_row_item_title_text_size"
+                tools:text="@tools:sample/lorem"/>
 
             <TextView
                 android:id="@+id/textView_alt"
@@ -50,11 +54,12 @@
                 android:layout_gravity="bottom"
                 android:ellipsize="end"
                 android:paddingBottom="@dimen/list_row_item_text_padding"
-                android:paddingLeft="@dimen/list_row_item_text_left_padding"
-                android:paddingRight="@dimen/list_row_item_text_padding"
+                android:paddingStart="@dimen/list_row_item_text_left_padding"
+                android:paddingEnd="@dimen/list_row_item_text_padding"
                 android:singleLine="true"
                 android:text="@{content.alt}"
-                android:textSize="@dimen/list_row_item_alt_text_size"/>
+                android:textSize="@dimen/list_row_item_alt_text_size"
+                tools:text="@tools:sample/lorem"/>
 
         </android.support.v7.widget.CardView>
 

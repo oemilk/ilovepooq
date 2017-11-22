@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="50dp"
               android:background="@android:color/white"
@@ -10,7 +11,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="10dp"
-        android:src="@android:drawable/ic_menu_report_image"/>
+        android:src="@android:drawable/ic_menu_report_image"
+        tools:ignore="contentDescription"
+        tools:src="@drawable/item_no_image"/>
 
     <TextView
         android:id="@+id/text"
@@ -23,6 +26,7 @@
         android:maxLines="1"
         android:textAppearance="?attr/textAppearanceListItemSmall"
         android:textColor="@android:color/black"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        tools:text="@tools:sample/lorem"/>
 
 </LinearLayout>
