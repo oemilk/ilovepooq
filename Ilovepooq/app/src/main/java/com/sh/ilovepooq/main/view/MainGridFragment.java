@@ -35,7 +35,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class MainGridFragment extends BaseFragment implements MainGridContract.View {
 
@@ -61,8 +60,6 @@ public class MainGridFragment extends BaseFragment implements MainGridContract.V
 
     private List<ContentInfoModel> contentInfoModelList = new ArrayList<>();
 
-    private Unbinder unbinder;
-
     private Callback callback;
 
     public static MainGridFragment newInstance() {
@@ -87,7 +84,7 @@ public class MainGridFragment extends BaseFragment implements MainGridContract.V
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main_grid, container, false);
-        unbinder = ButterKnife.bind(this, root);
+        setUnbinder(ButterKnife.bind(this, root));
 
         gridLayoutManager = new GridLayoutManager(root.getContext(), PORTRAIT_SPAN_COUNT);
 
@@ -131,10 +128,6 @@ public class MainGridFragment extends BaseFragment implements MainGridContract.V
         super.onDestroyView();
 
         presenter.clear();
-
-        if (unbinder != null) {
-            unbinder.unbind();
-        }
     }
 
     @Override

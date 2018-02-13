@@ -1,24 +1,29 @@
 package com.sh.ilovepooq.base;
 
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.sh.ilovepooq.R;
-
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+        setContentView(getContentViewResouce());
     }
 
-    public void showToast(String s) {
+    @LayoutRes
+    protected abstract int getContentViewResouce();
+
+    protected void showToast(@NonNull String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
-    public void showToast(int id) {
+    protected void showToast(@StringRes int id) {
         Toast.makeText(this, getString(id), Toast.LENGTH_SHORT).show();
     }
 

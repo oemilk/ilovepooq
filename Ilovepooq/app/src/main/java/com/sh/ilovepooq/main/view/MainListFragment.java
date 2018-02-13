@@ -31,7 +31,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class MainListFragment extends BaseFragment implements MainListContract.View {
 
@@ -52,8 +51,6 @@ public class MainListFragment extends BaseFragment implements MainListContract.V
     private MainListAdapter adapter;
 
     private List<ContentInfoModel> contentInfoModelList = new ArrayList<>();
-
-    private Unbinder unbinder;
 
     private Callback callback;
 
@@ -79,7 +76,7 @@ public class MainListFragment extends BaseFragment implements MainListContract.V
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_main_list, container, false);
-        unbinder = ButterKnife.bind(this, root);
+        setUnbinder(ButterKnife.bind(this, root));
 
         adapter = new MainListAdapter(contentInfoModelList, link -> {
             if (link == null || link.isEmpty()) {
@@ -112,10 +109,6 @@ public class MainListFragment extends BaseFragment implements MainListContract.V
         super.onDestroyView();
 
         presenter.clear();
-
-        if (unbinder != null) {
-            unbinder.unbind();
-        }
     }
 
     @Override

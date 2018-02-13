@@ -37,7 +37,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.reactivex.subscribers.DisposableSubscriber;
 
 public class SearchFragment extends BaseFragment implements SearchContract.View {
@@ -66,8 +65,6 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     private GridLayoutManager gridLayoutManager;
 
     private List<SearchImageModel.Document> contentInfoModelList = new ArrayList<>();
-
-    private Unbinder unbinder;
 
     private String searchQuery;
 
@@ -99,7 +96,7 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_search, container, false);
-        unbinder = ButterKnife.bind(this, root);
+        setUnbinder(ButterKnife.bind(this, root));
 
         gridLayoutManager = new GridLayoutManager(root.getContext(), PORTRAIT_SPAN_COUNT);
 
@@ -155,10 +152,6 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         super.onDestroyView();
 
         presenter.clear();
-
-        if (unbinder != null) {
-            unbinder.unbind();
-        }
     }
 
     @Override

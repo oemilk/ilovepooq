@@ -28,9 +28,13 @@ public class SearchActivity extends BaseActivity {
     private SearchFragment searchFragment;
 
     @Override
+    protected int getContentViewResouce() {
+        return R.layout.activity_search;
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search);
 
         Intent intent = getIntent();
         String searchQuery = intent.getStringExtra(Constants.EXTRA_SEARCH_QUERY);
