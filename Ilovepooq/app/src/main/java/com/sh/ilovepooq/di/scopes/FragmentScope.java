@@ -1,4 +1,4 @@
-package com.sh.ilovepooq.di.base;
+package com.sh.ilovepooq.di.scopes;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

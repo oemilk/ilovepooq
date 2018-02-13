@@ -25,7 +25,6 @@ import com.lapism.searchview.SearchView;
 import com.sh.ilovepooq.R;
 import com.sh.ilovepooq.base.BaseFragment;
 import com.sh.ilovepooq.base.Constants;
-import com.sh.ilovepooq.di.search.SearchModule;
 import com.sh.ilovepooq.model.SearchImageModel;
 import com.sh.ilovepooq.rx.RxSearch;
 import com.sh.ilovepooq.search.SearchContract;
@@ -93,8 +92,6 @@ public class SearchFragment extends BaseFragment implements SearchContract.View 
         }
 
         setRetainInstance(true);
-
-        getAppComponent().plus(new SearchModule()).inject(this);
     }
 
     @Nullable

@@ -20,7 +20,6 @@ import android.widget.TextView;
 
 import com.sh.ilovepooq.R;
 import com.sh.ilovepooq.base.BaseFragment;
-import com.sh.ilovepooq.di.main.MainModule;
 import com.sh.ilovepooq.main.MainListContract;
 import com.sh.ilovepooq.model.ContentInfoModel;
 import com.sh.ilovepooq.utils.LogUtils;
@@ -73,8 +72,6 @@ public class MainListFragment extends BaseFragment implements MainListContract.V
         super.onCreate(savedInstanceState);
 
         setRetainInstance(true);
-
-        getAppComponent().plus(new MainModule()).inject(this);
     }
 
     @Nullable

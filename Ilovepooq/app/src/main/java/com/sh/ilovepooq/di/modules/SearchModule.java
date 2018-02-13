@@ -1,6 +1,6 @@
-package com.sh.ilovepooq.di.search;
+package com.sh.ilovepooq.di.modules;
 
-import com.sh.ilovepooq.di.base.FragmentScope;
+import com.sh.ilovepooq.di.scopes.FragmentScope;
 import com.sh.ilovepooq.remote.KakaoAPI;
 import com.sh.ilovepooq.search.SearchContract;
 import com.sh.ilovepooq.search.presenter.SearchPresenter;

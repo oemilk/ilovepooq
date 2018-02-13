@@ -1,4 +1,4 @@
-package com.sh.ilovepooq.di.remote;
+package com.sh.ilovepooq.di.modules;
 
 import com.sh.ilovepooq.remote.HTMLParser;
 

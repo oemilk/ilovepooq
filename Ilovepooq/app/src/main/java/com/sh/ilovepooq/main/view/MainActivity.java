@@ -3,7 +3,7 @@ package com.sh.ilovepooq.main.view;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
+import android.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 
 import com.sh.ilovepooq.R;
@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity implements MainGridFragment.Callb
             getSupportActionBar().setDisplayShowTitleEnabled(true);
         }
 
-        fragmentManager = getSupportFragmentManager();
+        fragmentManager = getFragmentManager();
         if (!ActivityUtils.hasFragment(fragmentManager, MAIN_GRID_TAG)
                 && !ActivityUtils.hasFragment(fragmentManager, MAIN_LIST_TAG)) {
             ActivityUtils.addFragment(fragmentManager, MainGridFragment.newInstance(),

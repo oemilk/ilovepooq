@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.FragmentManager;
+import android.app.FragmentManager;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
@@ -43,7 +43,7 @@ public class SearchActivity extends BaseActivity {
             getSupportActionBar().setTitle(searchQuery);
         }
 
-        fragmentManager = getSupportFragmentManager();
+        fragmentManager = getFragmentManager();
         searchFragment = SearchFragment.newInstance(searchQuery);
         if (!ActivityUtils.hasFragment(fragmentManager, SEARCH_TAG)) {
             ActivityUtils.addFragment(fragmentManager, searchFragment,

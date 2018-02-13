@@ -1,22 +1,20 @@
 package com.sh.ilovepooq.base;
 
-import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
-import com.sh.ilovepooq.di.base.AppComponent;
+import com.sh.ilovepooq.di.scopes.FragmentScope;
 
-public class BaseFragment extends Fragment {
+import dagger.android.DaggerFragment;
 
-    public AppComponent getAppComponent() {
-        return ((BaseActivity) getActivity()).getAppComponent();
-    }
+@FragmentScope
+public class BaseFragment extends DaggerFragment {
 
     public void showToast(String s) {
-        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
     }
 
     public void showToast(int id) {
-        Toast.makeText(getContext(), getString(id), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getString(id), Toast.LENGTH_SHORT).show();
     }
 
 }

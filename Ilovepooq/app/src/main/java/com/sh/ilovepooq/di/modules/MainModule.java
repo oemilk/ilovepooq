@@ -1,6 +1,6 @@
-package com.sh.ilovepooq.di.main;
+package com.sh.ilovepooq.di.modules;
 
-import com.sh.ilovepooq.di.base.FragmentScope;
+import com.sh.ilovepooq.di.scopes.FragmentScope;
 import com.sh.ilovepooq.main.MainGridContract;
 import com.sh.ilovepooq.main.presenter.MainGridPresenter;
 import com.sh.ilovepooq.main.MainListContract;
