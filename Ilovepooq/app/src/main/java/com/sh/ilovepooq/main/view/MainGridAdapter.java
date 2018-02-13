@@ -41,28 +41,41 @@ class MainGridAdapter extends RecyclerView.Adapter<MainGridAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_main_grid_row, parent, false);
-        return new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view);
+
+        holder.view.setOnClickListener(v -> {
+            int adapterPosition = holder.getAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                ContentInfoModel model = list.get(adapterPosition);
+                String title = model.getTitle();
+                String imageURL = model.getImageURL();
+                itemClick.startSearch(holder.imageView, title, imageURL);
+            }
+        });
+
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final ContentInfoModel model = list.get(holder.getAdapterPosition());
-        final String imageURL = model.getImageURL();
-        final String alt = model.getAlt();
-        final String title = model.getTitle();
+        int adapterPosition = holder.getAdapterPosition();
+        if (adapterPosition != RecyclerView.NO_POSITION) {
+            final ContentInfoModel model = list.get(adapterPosition);
+            final String imageURL = model.getImageURL();
+            final String alt = model.getAlt();
+            final String title = model.getTitle();
 
-        ImageUtils.displayIamge(imageURL, holder.imageView);
+            ImageUtils.displayIamge(imageURL, holder.imageView);
 
-        holder.textViewTItle.setText(title);
-        holder.textViewAlt.setText(alt);
-        holder.view.setOnClickListener(view ->
-                itemClick.startSearch(holder.imageView, title, imageURL));
+            holder.textViewTItle.setText(title);
+            holder.textViewAlt.setText(alt);
 
-        if (position > lastPosition) {
-            Animation animation = AnimationUtils.loadAnimation(
-                    holder.imageView.getContext(), R.anim.up_from_bottom_grid);
-            holder.view.startAnimation(animation);
-            lastPosition = position;
+            if (position > lastPosition) {
+                Animation animation = AnimationUtils.loadAnimation(
+                        holder.imageView.getContext(), R.anim.up_from_bottom_grid);
+                holder.view.startAnimation(animation);
+                lastPosition = position;
+            }
         }
     }
 

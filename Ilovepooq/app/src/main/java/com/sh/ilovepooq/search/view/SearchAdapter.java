@@ -38,22 +38,33 @@ class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_search_grid_row, parent, false);
-        return new ViewHolder(view);
+        ViewHolder holder = new ViewHolder(view);
+
+        holder.view.setOnClickListener(v -> {
+            int adapterPosition = holder.getAdapterPosition();
+            if (adapterPosition != RecyclerView.NO_POSITION) {
+                String hyperlink = list.get(adapterPosition).getDocUrl();
+                itemClick.startBrowser(hyperlink);
+            }
+        });
+
+        return holder;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final SearchImageModel.Document model = list.get(holder.getAdapterPosition());
-        final String imageURL = model.getThumbnailUrl();
-        final String alt = TextUtils.parseDateFromString(model.getDatetime());
-        final String title = model.getDisplaySitename();
-        final String hyperlink = model.getDocUrl();
+        int adapterPosition = holder.getAdapterPosition();
+        if (adapterPosition != RecyclerView.NO_POSITION) {
+            final SearchImageModel.Document model = list.get(adapterPosition);
+            final String imageURL = model.getThumbnailUrl();
+            final String alt = TextUtils.parseDateFromString(model.getDatetime());
+            final String title = model.getDisplaySitename();
 
-        ImageUtils.displayIamge(imageURL, holder.imageView);
+            ImageUtils.displayIamge(imageURL, holder.imageView);
 
-        holder.textViewTItle.setText(title);
-        holder.textViewAlt.setText(alt);
-        holder.view.setOnClickListener(view -> itemClick.startBrowser(hyperlink));
+            holder.textViewTItle.setText(title);
+            holder.textViewAlt.setText(alt);
+        }
     }
 
     interface ItemClick {
