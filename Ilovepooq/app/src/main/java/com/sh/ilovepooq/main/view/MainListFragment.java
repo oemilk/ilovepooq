@@ -19,8 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sh.ilovepooq.R;
-import com.sh.ilovepooq.base.App;
 import com.sh.ilovepooq.base.BaseFragment;
+import com.sh.ilovepooq.di.main.MainModule;
 import com.sh.ilovepooq.main.MainListContract;
 import com.sh.ilovepooq.model.ContentInfoModel;
 import com.sh.ilovepooq.utils.LogUtils;
@@ -74,7 +74,7 @@ public class MainListFragment extends BaseFragment implements MainListContract.V
 
         setRetainInstance(true);
 
-        ((App) getActivity().getApplication()).createMainComponent().inject(this);
+        getAppComponent().plus(new MainModule()).inject(this);
     }
 
     @Nullable
@@ -130,7 +130,6 @@ public class MainListFragment extends BaseFragment implements MainListContract.V
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ((App) getActivity().getApplication()).releaseMainComponent();
     }
 
     @Override

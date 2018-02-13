@@ -1,5 +1,6 @@
-package com.sh.ilovepooq.dagger.search;
+package com.sh.ilovepooq.di.search;
 
+import com.sh.ilovepooq.di.base.FragmentScope;
 import com.sh.ilovepooq.remote.KakaoAPI;
 import com.sh.ilovepooq.search.SearchContract;
 import com.sh.ilovepooq.search.presenter.SearchPresenter;
@@ -12,13 +13,13 @@ import dagger.Provides;
 public class SearchModule {
 
     @Provides
-    @SearchScope
+    @FragmentScope
     public SearchContract.Presenter providePresenter(SearchContract.Repository repository) {
         return new SearchPresenter(repository);
     }
 
     @Provides
-    @SearchScope
+    @FragmentScope
     public SearchContract.Repository provideRepository(KakaoAPI kakaoAPI) {
         return new SearchRepository(kakaoAPI);
     }

@@ -1,4 +1,4 @@
-package com.sh.ilovepooq.dagger.search;
+package com.sh.ilovepooq.di.base;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -7,5 +7,4 @@ import javax.inject.Scope;
 
 @Scope
 @Retention(RetentionPolicy.RUNTIME)
-@interface SearchScope {
-}
+public @interface FragmentScope {}

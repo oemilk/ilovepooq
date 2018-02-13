@@ -1,10 +1,11 @@
-package com.sh.ilovepooq.dagger.search;
+package com.sh.ilovepooq.di.search;
 
+import com.sh.ilovepooq.di.base.FragmentScope;
 import com.sh.ilovepooq.search.view.SearchFragment;
 
 import dagger.Subcomponent;
 
-@SearchScope
+@FragmentScope
 @Subcomponent(modules = {SearchModule.class})
 public interface SearchComponent {
 

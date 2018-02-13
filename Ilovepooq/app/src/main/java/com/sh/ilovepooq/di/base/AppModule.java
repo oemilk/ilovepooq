@@ -1,4 +1,4 @@
-package com.sh.ilovepooq.dagger.base;
+package com.sh.ilovepooq.di.base;
 
 import android.app.Application;
 import android.content.Context;
@@ -20,6 +20,7 @@ public class AppModule {
     @Provides
     @Singleton
     Context provideContext() {
+        // temp
         return context;
     }
 

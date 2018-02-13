@@ -1,5 +1,6 @@
-package com.sh.ilovepooq.dagger.main;
+package com.sh.ilovepooq.di.main;
 
+import com.sh.ilovepooq.di.base.FragmentScope;
 import com.sh.ilovepooq.main.MainGridContract;
 import com.sh.ilovepooq.main.presenter.MainGridPresenter;
 import com.sh.ilovepooq.main.MainListContract;
@@ -14,25 +15,25 @@ import dagger.Provides;
 public class MainModule {
 
     @Provides
-    @MainScope
+    @FragmentScope
     public MainGridContract.Presenter provideGridPresenter(MainGridContract.Repository repository) {
         return new MainGridPresenter(repository);
     }
 
     @Provides
-    @MainScope
+    @FragmentScope
     public MainGridContract.Repository provideGridRepository(HTMLParser parser) {
         return new MainRepository(parser);
     }
 
     @Provides
-    @MainScope
+    @FragmentScope
     public MainListContract.Presenter provideListPresenter(MainListContract.Repository repository) {
         return new MainListPresenter(repository);
     }
 
     @Provides
-    @MainScope
+    @FragmentScope
     public MainListContract.Repository provideListRepository(HTMLParser parser) {
         return new MainRepository(parser);
     }

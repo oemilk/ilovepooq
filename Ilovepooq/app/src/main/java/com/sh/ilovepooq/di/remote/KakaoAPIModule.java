@@ -1,4 +1,4 @@
-package com.sh.ilovepooq.dagger.remote;
+package com.sh.ilovepooq.di.remote;
 
 import com.sh.ilovepooq.BuildConfig;
 import com.sh.ilovepooq.base.Constants;

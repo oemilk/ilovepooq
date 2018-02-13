@@ -1,11 +1,12 @@
-package com.sh.ilovepooq.dagger.main;
+package com.sh.ilovepooq.di.main;
 
+import com.sh.ilovepooq.di.base.FragmentScope;
 import com.sh.ilovepooq.main.view.MainGridFragment;
 import com.sh.ilovepooq.main.view.MainListFragment;
 
 import dagger.Subcomponent;
 
-@MainScope
+@FragmentScope
 @Subcomponent(modules = {MainModule.class})
 public interface MainComponent {
 

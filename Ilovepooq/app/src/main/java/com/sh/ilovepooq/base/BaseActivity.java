@@ -5,13 +5,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.sh.ilovepooq.R;
+import com.sh.ilovepooq.di.base.AppComponent;
 
 public class BaseActivity extends AppCompatActivity {
+
+    private AppComponent appComponent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+
+        appComponent = ((App) getApplication()).getAppComponent();
+    }
+
+    public AppComponent getAppComponent() {
+        return appComponent;
     }
 
     public void showToast(String s) {

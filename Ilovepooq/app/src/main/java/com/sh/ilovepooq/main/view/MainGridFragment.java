@@ -21,9 +21,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.sh.ilovepooq.R;
-import com.sh.ilovepooq.base.App;
 import com.sh.ilovepooq.base.BaseFragment;
 import com.sh.ilovepooq.base.Constants;
+import com.sh.ilovepooq.di.main.MainModule;
 import com.sh.ilovepooq.main.MainGridContract;
 import com.sh.ilovepooq.model.ContentInfoModel;
 import com.sh.ilovepooq.search.view.SearchActivity;
@@ -82,7 +82,7 @@ public class MainGridFragment extends BaseFragment implements MainGridContract.V
 
         setRetainInstance(true);
 
-        ((App) getActivity().getApplication()).createMainComponent().inject(this);
+        getAppComponent().plus(new MainModule()).inject(this);
     }
 
     @Nullable
@@ -149,7 +149,6 @@ public class MainGridFragment extends BaseFragment implements MainGridContract.V
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ((App) getActivity().getApplication()).releaseMainComponent();
     }
 
     @Override
